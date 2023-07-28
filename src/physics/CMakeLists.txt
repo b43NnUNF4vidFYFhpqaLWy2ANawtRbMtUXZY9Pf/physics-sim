@@ -3,4 +3,6 @@ project(physics)
 add_library(physics STATIC
     world.cpp
     vector.cpp
+    polygon.cpp
+    dynamics/rigid_body.cpp
 )

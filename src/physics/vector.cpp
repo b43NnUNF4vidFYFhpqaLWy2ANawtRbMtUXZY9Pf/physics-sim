@@ -1,10 +1,26 @@
 #include "vector.h"
 
+Vector3::Vector3() : x(0.0f), y(0.0f), z(0.0f) {}
+
 Vector3::Vector3(float x, float y, float z) : x(x), y(y), z(z) {}
 
 Vector3 Vector3::operator+(Vector3& other) const
 {
     return {x + other.x, y + other.y, z + other.z};
+}
+
+Vector3& Vector3::operator+=(Vector3& other)
+{
+    x += other.x;
+    y += other.y;
+    z += other.z;
+
+    return *this;
+}
+
+Vector3 Vector3::operator-(Vector3& other) const
+{
+    return {x - other.x, y - other.y, z - other.z};
 }
 
 Vector3 Vector3::operator/(float divisor) const
