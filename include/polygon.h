@@ -12,7 +12,6 @@ private:
 
     Vector3 find_centroid() const;
 public:
-    
     Polygon(std::initializer_list<Vector3> vertices);
     void move(Vector3& delta);
     void rotate(float v);
