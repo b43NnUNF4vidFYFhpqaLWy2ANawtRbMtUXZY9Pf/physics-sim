@@ -9,7 +9,9 @@ Polygon::Polygon(std::initializer_list<Vector3> vertices)
     : m_vertices(vertices),
       m_centroid(find_centroid())
 {
-    if ( !is_convex() ) { throw std::invalid_argument("Polygon should be convex"); }
+    if (!is_convex()) {
+        throw std::invalid_argument("Polygon should be convex");
+    }
 }
 
 void Polygon::move(Vector3& delta)
@@ -35,7 +37,24 @@ void Polygon::rotate(float v)
 
 bool Polygon::is_convex() const
 {
-    return true; // Not implemented
+    std::size_t n = m_vertices.size();
+    std::size_t prev = n-1;
+    Vector3 i_vert, prev_vert, next_vert, a, b;
+    float cp;
+
+    for (std::size_t i = 0; i < n; i++) {
+        i_vert = m_vertices[i];
+        prev_vert = m_vertices[prev];
+        next_vert = m_vertices[(i+1) % n];
+        
+        a = prev_vert - i_vert;
+        b = next_vert - i_vert;
+        if (a.cross(b).z < 0) return false;
+
+        prev = i;
+    }
+
+    return true;
 }
 
 const std::vector<Vector3>& Polygon::get_vertices() const
