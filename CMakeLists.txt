@@ -19,6 +19,7 @@ add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/src/physics)
 add_executable(${PROJECT_NAME}
     src/main.cpp
     src/window.cpp
+    src/timer.cpp
 )
 target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
