@@ -49,7 +49,6 @@ void RigidBody::calc_moment_of_inertia()
     Vector3 center_tri;
     float inertia_tri;
 
-    Vector3 temp_fix; // error: cannot bind non-const lvalue reference of type ‘Vector3&’ to an rvalue of type ‘Vector3’
     for (std::size_t i = 0; i < n; i++) {
         a = vertices[prev] - centroid;
         b = vertices[i] - centroid;
@@ -58,8 +57,7 @@ void RigidBody::calc_moment_of_inertia()
         center_tri = (a+b)/3;
         inertia_tri = area_tri*(a.dot(a) + b.dot(b) + a.dot(b))/6;
 
-        temp_fix = center_tri*area_tri;
-        center = (center*area + temp_fix)/(area + area_tri);
+        center = (center*area + center_tri*area_tri)/(area + area_tri);
         area += area_tri;
         m_inertia += inertia_tri;
 

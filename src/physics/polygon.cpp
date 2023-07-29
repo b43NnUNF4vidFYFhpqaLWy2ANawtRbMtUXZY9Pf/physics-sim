@@ -25,14 +25,11 @@ void Polygon::rotate(float v)
 {
     Vector3 i(cos(v), sin(v), 0);
     Vector3 j(-sin(v), cos(v), 0);
-    Vector3 centered, i_scaled, j_scaled;
+    Vector3 centered;
 
     for (Vector3& vertex : m_vertices) {
         centered = vertex - m_centroid;
-        i_scaled = centered.x*i;
-        j_scaled = centered.y*j;
-
-        vertex = (i_scaled + j_scaled) + m_centroid;
+        vertex = (centered.x*i + centered.y*j) + m_centroid;
     }
 }
 
@@ -41,12 +38,12 @@ bool Polygon::is_convex() const
     return true; // Not implemented
 }
 
-std::vector<Vector3>& Polygon::get_vertices()
+const std::vector<Vector3>& Polygon::get_vertices() const
 {
     return m_vertices;
 }
 
-Vector3& Polygon::get_centroid()
+const Vector3& Polygon::get_centroid() const
 {
     return m_centroid;
 }

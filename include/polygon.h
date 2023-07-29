@@ -4,19 +4,20 @@
 #include <initializer_list>
 #include "vector.h"
 
-struct Polygon
+class Polygon
 {
-public:
+private:
     std::vector<Vector3> m_vertices;
     Vector3 m_centroid;
+
+    Vector3 find_centroid() const;
+public:
     
     Polygon(std::initializer_list<Vector3> vertices);
     void move(Vector3& delta);
     void rotate(float v);
     bool is_convex() const;
     
-    std::vector<Vector3>& get_vertices();
-    Vector3& get_centroid();
-private:
-    Vector3 find_centroid() const;
+    const std::vector<Vector3>& get_vertices() const;
+    const Vector3& get_centroid() const;
 };
