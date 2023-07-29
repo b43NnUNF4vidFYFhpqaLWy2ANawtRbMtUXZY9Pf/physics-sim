@@ -40,7 +40,6 @@ bool Polygon::is_convex() const
     std::size_t n = m_vertices.size();
     std::size_t prev = n-1;
     Vector3 i_vert, prev_vert, next_vert, a, b;
-    float cp;
 
     for (std::size_t i = 0; i < n; i++) {
         i_vert = m_vertices[i];
