@@ -67,10 +67,10 @@ void Window::stop()
 
 void Window::render_polygon(const Polygon& polygon)
 {
-    std::vector<Vector3> vertices = polygon.get_vertices();
+    std::vector<Vector2> vertices = polygon.get_vertices();
     std::size_t n = vertices.size();
     std::size_t prev = n-1;
-    Vector3 a, b;
+    Vector2 a, b;
 
     SDL_SetRenderDrawColor(m_renderer, 0x00, 0x00, 0x00, SDL_ALPHA_OPAQUE);
 

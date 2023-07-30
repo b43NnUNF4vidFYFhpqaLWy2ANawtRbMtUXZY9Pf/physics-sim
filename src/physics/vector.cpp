@@ -1,49 +1,50 @@
 #include "vector.h"
 
-Vector3::Vector3() : x(0.0f), y(0.0f), z(0.0f) {}
+Vector2::Vector2() : x(0.0f), y(0.0f), z(0.0f) {}
 
-Vector3::Vector3(float x, float y, float z) : x(x), y(y), z(z) {}
+Vector2::Vector2(float x, float y) : x(x), y(y) {}
 
-Vector3 Vector3::operator+(const Vector3& other) const
+Vector2::Vector2(float x, float y, float z) : x(x), y(y), z(z) {}
+
+Vector2 Vector2::operator+(const Vector2& other) const
 {
-    return {x + other.x, y + other.y, z + other.z};
+    return {x + other.x, y + other.y};
 }
 
-Vector3& Vector3::operator+=(const Vector3& other)
+Vector2& Vector2::operator+=(const Vector2& other)
 {
     x += other.x;
     y += other.y;
-    z += other.z;
 
     return *this;
 }
 
-Vector3 Vector3::operator-(const Vector3& other) const
+Vector2 Vector2::operator-(const Vector2& other) const
 {
-    return {x - other.x, y - other.y, z - other.z};
+    return {x - other.x, y - other.y};
 }
 
-Vector3 Vector3::operator/(float divisor) const
+Vector2 Vector2::operator/(float divisor) const
 {
-    return {x/divisor, y/divisor, z/divisor};
+    return {x/divisor, y/divisor};
 }
 
-Vector3 Vector3::operator*(float scalar) const
+Vector2 Vector2::operator*(float scalar) const
 {
-    return {scalar*x, scalar*y, scalar*z};
+    return {scalar*x, scalar*y};
 }
 
-Vector3 operator*(float scalar, const Vector3& v)
+Vector2 operator*(float scalar, const Vector2& v)
 {
     return v*scalar;
 }
 
-float Vector3::dot(const Vector3& other) const
+float Vector2::dot(const Vector2& other) const
 {
-    return x*other.x + y*other.y + z*other.z;
+    return x*other.x + y*other.y;
 }
 
-Vector3 Vector3::cross(const Vector3& other) const
+Vector2 Vector2::cross(const Vector2& other) const
 {
     return {y*other.z - z*other.y, z*other.x - x*other.z, x*other.y - y*other.x};
 }

@@ -9,16 +9,16 @@ constexpr int SCREEN_HEIGHT = 720;
 
 int main()
 {
-    Vector3 a(500, 500, 0);
-    Vector3 b(500, 600, 0);
-    Vector3 c(600, 600, 0);
-    Vector3 d(600, 500, 0);
+    Vector2 a(500, 500);
+    Vector2 b(500, 600);
+    Vector2 c(600, 600);
+    Vector2 d(600, 500);
     
     Polygon poly({a, b, c, d});
     RigidBody body(poly, 10);
 
     World world;
-    Vector3 gravity(0.0f, -9.82f, 0.0f);
+    Vector2 gravity(0.0, -9.82);
     world.set_gravity(gravity);
     world.add_object(&body);
 

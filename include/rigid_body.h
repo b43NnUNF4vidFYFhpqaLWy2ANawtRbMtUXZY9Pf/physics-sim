@@ -7,8 +7,8 @@ class RigidBody
 {
 private:
     Polygon m_polygon;
-    Vector3 m_vel;
-    Vector3 m_force;
+    Vector2 m_vel;
+    Vector2 m_force;
     float m_angularVelocity;
     float m_torque;
     
@@ -24,6 +24,6 @@ public:
     const Polygon& get_polygon() const;
     float get_mass() const;
 
-    void apply_force(const Vector3& f, const Vector3& p);
+    void apply_force(const Vector2& f, const Vector2& p);
     void step(double dt);
 };

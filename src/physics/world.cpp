@@ -31,7 +31,7 @@ const std::vector<RigidBody*>& World::get_objects() const
     return m_objects;
 }
 
-void World::set_gravity(const Vector3& gravity)
+void World::set_gravity(const Vector2& gravity)
 {
     m_gravity = gravity;
 }

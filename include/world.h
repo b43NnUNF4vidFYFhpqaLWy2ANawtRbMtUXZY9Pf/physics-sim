@@ -7,7 +7,7 @@ class World
 {
 private:
     std::vector<RigidBody*> m_objects;
-    Vector3 m_gravity;
+    Vector2 m_gravity;
 public:
     World();
 
@@ -16,6 +16,6 @@ public:
     void remove_object(RigidBody* object);
     const std::vector<RigidBody*>& get_objects() const;
 
-    void set_gravity(const Vector3& gravity);
+    void set_gravity(const Vector2& gravity);
     void step(double dt);
 };

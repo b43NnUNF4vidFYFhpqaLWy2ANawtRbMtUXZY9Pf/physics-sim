@@ -23,18 +23,18 @@ float RigidBody::get_mass() const
     return m_mass;
 }
 
-void RigidBody::apply_force(const Vector3& f, const Vector3& p)
+void RigidBody::apply_force(const Vector2& f, const Vector2& p)
 {
     m_force += f;
     
-    Vector3 r = p - m_polygon.get_centroid();
+    Vector2 r = p - m_polygon.get_centroid();
     m_torque += r.cross(f).z;
 }
 
 void RigidBody::step(double dt)
 {
     m_vel += (m_force/m_mass)*dt;
-    Vector3 delta_pos = m_vel*dt;
+    Vector2 delta_pos = m_vel*dt;
     m_polygon.move(delta_pos);
     m_force = {0, 0, 0};
     
@@ -48,17 +48,17 @@ void RigidBody::calc_moment_of_inertia()
 {
     // https://stackoverflow.com/a/58983642
     float area = 0.0f;
-    Vector3 center(0.0f, 0.0f, 0.0f);
+    Vector2 center(0.0f, 0.0f, 0.0f);
 
-    std::vector<Vector3> vertices = m_polygon.get_vertices();
+    std::vector<Vector2> vertices = m_polygon.get_vertices();
     std::size_t n = vertices.size();
     std::size_t prev = n-1;
 
-    Vector3 centroid = m_polygon.get_centroid();
-    Vector3 a;
-    Vector3 b;
+    Vector2 centroid = m_polygon.get_centroid();
+    Vector2 a;
+    Vector2 b;
     float area_tri;
-    Vector3 center_tri;
+    Vector2 center_tri;
     float inertia_tri;
 
     for (std::size_t i = 0; i < n; i++) {
