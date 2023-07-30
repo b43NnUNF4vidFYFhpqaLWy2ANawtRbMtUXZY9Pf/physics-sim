@@ -9,26 +9,21 @@ constexpr int SCREEN_HEIGHT = 720;
 
 int main()
 {
-    Vector3 f(0.0f, 10.0f, 0.0f);
-
-    Vector3 a(2.0f, 2.0f, 0.0f);
-    Vector3 b(2.0f, 4.0f, 0.0f);
-    Vector3 c(4.0f, 4.0f, 0.0f);
-    Vector3 d(4.0f, 2.0f, 0.0f);
+    Vector3 a(500, 500, 0);
+    Vector3 b(500, 600, 0);
+    Vector3 c(600, 600, 0);
+    Vector3 d(600, 500, 0);
     
     Polygon poly({a, b, c, d});
     RigidBody body(poly, 10);
 
     World world;
+    Vector3 gravity(0.0f, -9.82f, 0.0f);
+    world.set_gravity(gravity);
     world.add_object(&body);
-    
-    Vector3 p(3.0f, 2.0f, 0.0f);
-    body.apply_force(f, p);
 
-    world.step(1);
-    
-/*     Window window(SCREEN_WIDTH, SCREEN_HEIGHT);
-    window.loop(); */
+    Window window(SCREEN_WIDTH, SCREEN_HEIGHT);
+    window.loop(world);
     
     return EXIT_SUCCESS;
 }

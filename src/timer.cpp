@@ -12,14 +12,14 @@ void Timer::start()
     m_old_time = SDL_GetTicks64();
 }
 
-float Timer::get_dt()
+double Timer::get_dt()
 {
-    float dt;
+    double dt;
     
     if (!m_started) start();
     
     m_new_time = SDL_GetTicks64();
-    dt = (float)(m_new_time - m_old_time)/1000;
+    dt = (double)(m_new_time - m_old_time)/1000;
     m_old_time = m_new_time;
     
     return dt;

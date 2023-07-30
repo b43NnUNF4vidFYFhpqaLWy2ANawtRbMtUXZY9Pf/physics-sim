@@ -1,20 +1,26 @@
 #pragma once
 
+#include "polygon.h"
+#include "world.h"
+#include "timer.h"
 #include <SDL2/SDL.h>
 
 class Window
 {
 private:
     SDL_Window* m_window;
-    SDL_Surface* m_surface;
     SDL_Renderer* m_renderer;
+    Timer m_timer;
     bool m_running;
+    
+    float invert_y(float y);
+    void render_polygon(const Polygon& polygon);
+    void render_world(const World& world);
 public:
     Window(int width, int height);
     ~Window();
     
     void handle_events();
-    
-    void loop();
+    void loop(World& world);
     void stop();
 };

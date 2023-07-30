@@ -11,5 +11,5 @@ public:
     Timer();
 
     void start();
-    float get_dt();
+    double get_dt();
 };

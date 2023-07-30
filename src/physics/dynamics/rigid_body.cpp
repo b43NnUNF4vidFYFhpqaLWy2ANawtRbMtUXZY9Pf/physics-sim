@@ -6,29 +6,41 @@
 RigidBody::RigidBody(Polygon polygon, float mass)
     : m_polygon(polygon),
       m_mass(mass),
-      m_invMass(1/mass)
+      m_invMass(1/mass),
+      m_angularVelocity(0),
+      m_torque(0)
 {
     calc_moment_of_inertia();
 }
 
-void RigidBody::apply_force(Vector3& f, Vector3& p)
+const Polygon& RigidBody::get_polygon() const
+{
+    return m_polygon;
+}
+
+float RigidBody::get_mass() const
+{
+    return m_mass;
+}
+
+void RigidBody::apply_force(const Vector3& f, const Vector3& p)
 {
     m_force += f;
     
     Vector3 r = p - m_polygon.get_centroid();
-    m_torque = r.cross(f).z;
+    m_torque += r.cross(f).z;
 }
 
-void RigidBody::step(float dt)
+void RigidBody::step(double dt)
 {
-    m_vel = (m_force/m_mass)*dt;
+    m_vel += (m_force/m_mass)*dt;
     Vector3 delta_pos = m_vel*dt;
     m_polygon.move(delta_pos);
     m_force = {0, 0, 0};
     
-    m_angularVelocity = (m_torque/m_inertia)*dt;
-    m_angle = m_angularVelocity*dt;
-    m_polygon.rotate(m_angle);
+    m_angularVelocity += (m_torque/m_inertia)*dt;
+    float delta_angle = m_angularVelocity*dt;
+    m_polygon.rotate(delta_angle);
     m_torque = 0.0f;
 }
 
