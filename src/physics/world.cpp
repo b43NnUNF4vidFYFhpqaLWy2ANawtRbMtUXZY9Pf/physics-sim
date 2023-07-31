@@ -11,12 +11,12 @@ void World::reserve_objects(std::size_t cap)
     m_objects.reserve(cap);
 }
 
-void World::add_object(RigidBody* object)
+void World::add_object(CollisionBody* object)
 {
     m_objects.push_back(object);
 }
 
-void World::remove_object(RigidBody* object)
+void World::remove_object(CollisionBody* object)
 {
     if (!object) return;
     
@@ -26,7 +26,7 @@ void World::remove_object(RigidBody* object)
     m_objects.erase(itr);
 }
 
-const std::vector<RigidBody*>& World::get_objects() const
+const std::vector<CollisionBody*>& World::get_objects() const
 {
     return m_objects;
 }
@@ -38,8 +38,12 @@ void World::set_gravity(const Vector2& gravity)
 
 void World::step(double dt)
 {
-    for (RigidBody* object : m_objects) {
-        object->apply_force(object->get_mass()*m_gravity, object->get_polygon().get_centroid());
-        object->step(dt);
+    for (CollisionBody* object : m_objects) {
+        RigidBody* rigid_body = dynamic_cast<RigidBody*>(object);
+
+        if (rigid_body) {
+            rigid_body->apply_force(rigid_body->get_mass()*m_gravity, rigid_body->get_polygon().get_centroid());
+            rigid_body->step(dt);
+        }
     }
 }

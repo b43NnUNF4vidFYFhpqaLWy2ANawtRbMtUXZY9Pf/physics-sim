@@ -4,5 +4,6 @@ add_library(physics STATIC
     world.cpp
     vector.cpp
     polygon.cpp
+    dynamics/collision_body.cpp
     dynamics/rigid_body.cpp
 )

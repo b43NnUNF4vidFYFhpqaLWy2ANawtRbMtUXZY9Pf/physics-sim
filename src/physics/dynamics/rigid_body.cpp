@@ -4,18 +4,13 @@
 #include <cmath>
 
 RigidBody::RigidBody(Polygon polygon, float mass)
-    : m_polygon(polygon),
+    : CollisionBody(polygon),
       m_mass(mass),
       m_invMass(1/mass),
       m_angularVelocity(0),
       m_torque(0)
 {
     calc_moment_of_inertia();
-}
-
-const Polygon& RigidBody::get_polygon() const
-{
-    return m_polygon;
 }
 
 float RigidBody::get_mass() const

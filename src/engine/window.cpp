@@ -85,7 +85,7 @@ void Window::render_polygon(const Polygon& polygon)
 
 void Window::render_world(const World& world)
 {
-    for ( RigidBody* object : world.get_objects() ) {
+    for ( CollisionBody* object : world.get_objects() ) {
         render_polygon(object->get_polygon());
     }
 }
