@@ -13,7 +13,7 @@ private:
     Vector2 find_centroid() const;
 public:
     Polygon(std::initializer_list<Vector2> vertices);
-    void move(Vector2& delta);
+    void move(const Vector2& delta);
     void rotate(float v);
     bool is_convex() const;
     

@@ -26,17 +26,19 @@ void RigidBody::apply_force(const Vector2& f, const Vector2& p)
     m_torque += r.cross(f).z;
 }
 
-void RigidBody::step(double dt)
+void RigidBody::update_vel(double dt)
 {
     m_vel += (m_force/m_mass)*dt;
-    Vector2 delta_pos = m_vel*dt;
-    m_polygon.move(delta_pos);
     m_force = {0, 0, 0};
     
     m_angularVelocity += (m_torque/m_inertia)*dt;
-    float delta_angle = m_angularVelocity*dt;
-    m_polygon.rotate(delta_angle);
     m_torque = 0.0f;
+}
+
+void RigidBody::update_pos(double dt)
+{
+    m_polygon.move(m_vel*dt);
+    m_polygon.rotate(m_angularVelocity*dt);
 }
 
 void RigidBody::calc_moment_of_inertia()

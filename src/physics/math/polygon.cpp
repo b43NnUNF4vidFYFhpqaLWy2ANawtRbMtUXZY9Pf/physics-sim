@@ -15,7 +15,7 @@ Polygon::Polygon(std::initializer_list<Vector2> vertices)
     }
 }
 
-void Polygon::move(Vector2& delta)
+void Polygon::move(const Vector2& delta)
 {
     m_centroid += delta;
     
