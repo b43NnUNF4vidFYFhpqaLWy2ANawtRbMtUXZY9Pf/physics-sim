@@ -6,4 +6,7 @@ add_library(physics STATIC
     dynamics/rigid_body.cpp
     math/vector.cpp
     math/polygon.cpp
+    collision/detection/simplex.cpp
+    collision/detection/gjk.cpp
+    collision/detection/epa.cpp
 )

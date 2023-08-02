@@ -4,6 +4,7 @@
 #include <stdexcept>
 #include <cmath>
 #include <cstddef>
+#include <limits>
 
 Polygon::Polygon(std::initializer_list<Vector2> vertices)
     : m_vertices(vertices),
@@ -64,6 +65,26 @@ const std::vector<Vector2>& Polygon::get_vertices() const
 const Vector2& Polygon::get_centroid() const
 {
     return m_centroid;
+}
+
+Vector2 Polygon::support(Vector2 d) const
+{
+    Vector2 furthest_vertex;
+    float max_dist = -std::numeric_limits<float>::infinity();
+    Vector2 rel_vertex;
+    float new_dist = 0;
+    
+    for (const Vector2& vertex : m_vertices) {
+        rel_vertex = vertex - get_centroid();
+
+        new_dist = d.dot(rel_vertex);
+        if (new_dist > max_dist) {
+            max_dist = new_dist;
+            furthest_vertex = vertex;
+        }
+    }
+    
+    return furthest_vertex;
 }
 
 Vector2 Polygon::find_centroid() const
