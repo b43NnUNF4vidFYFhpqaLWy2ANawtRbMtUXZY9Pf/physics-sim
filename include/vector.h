@@ -13,7 +13,10 @@ struct Vector2
     Vector2 operator-(const Vector2& other) const;
     Vector2 operator/(float divisor) const;
     Vector2 operator*(float scalar) const;
+    Vector2& operator*=(float scalar);
     friend Vector2 operator*(float scalar, const Vector2& v);
     float dot(const Vector2& other) const;
     Vector2 cross(const Vector2& other) const;
+    float mag();
+    Vector2 norm();
 };
