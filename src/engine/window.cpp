@@ -3,7 +3,9 @@
 
 Window::Window(int width, int height)
     : m_window(nullptr),
-      m_renderer(nullptr)
+      m_renderer(nullptr),
+      m_running(true),
+      m_paused(false)
 {
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
         SDL_Log("SDL_Error: %s", SDL_GetError());
@@ -20,8 +22,6 @@ Window::Window(int width, int height)
             }
         }
     }
-
-    m_running = true;
 }
 
 Window::~Window()
@@ -41,6 +41,10 @@ void Window::handle_events()
     while (SDL_PollEvent(&e)) {
         if (e.type == SDL_QUIT) {
             stop();
+        } else if (e.type == SDL_KEYDOWN) {
+            switch (e.key.keysym.sym) {
+                case SDLK_SPACE: toggle_pause(); break;
+            }
         }
     }
 }
@@ -50,19 +54,27 @@ void Window::loop(World& world)
     while (m_running) {
         handle_events();
         
-        SDL_SetRenderDrawColor(m_renderer, 0xFF, 0xFF, 0xFF, SDL_ALPHA_OPAQUE);
-        SDL_RenderClear(m_renderer);
-        
-        world.step(m_timer.get_dt());
-        render_world(world);
+        if (!m_paused) {
+            SDL_SetRenderDrawColor(m_renderer, 0xFF, 0xFF, 0xFF, SDL_ALPHA_OPAQUE);
+            SDL_RenderClear(m_renderer);
+            
+            world.step(m_timer.get_dt());
+            render_world(world);
 
-        SDL_RenderPresent(m_renderer);
+            SDL_RenderPresent(m_renderer);
+        }
     }
 }
 
 void Window::stop()
 {
     m_running = false;
+}
+
+void Window::toggle_pause()
+{
+    m_paused = !m_paused;
+    m_timer.toggle_pause();
 }
 
 void Window::render_polygon(const Polygon& polygon)

@@ -2,7 +2,8 @@
 #include <SDL2/SDL.h>
 
 Timer::Timer()
-    : m_started(false)
+    : m_started(false),
+      m_paused(false)
 {
 }
 
@@ -12,10 +13,20 @@ void Timer::start()
     m_old_time = SDL_GetTicks64();
 }
 
+void Timer::toggle_pause()
+{
+    if (m_started && m_paused) {
+        m_old_time = SDL_GetTicks64();
+    }
+
+    m_paused = !m_paused;
+}
+
 double Timer::get_dt()
 {
     double dt;
     
+    if (m_paused) return 0;
     if (!m_started) start();
     
     m_new_time = SDL_GetTicks64();

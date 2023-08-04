@@ -12,6 +12,7 @@ private:
     SDL_Renderer* m_renderer;
     Timer m_timer;
     bool m_running;
+    bool m_paused;
     
     float invert_y(float y);
     void render_polygon(const Polygon& polygon);
@@ -23,4 +24,5 @@ public:
     void handle_events();
     void loop(World& world);
     void stop();
+    void toggle_pause();
 };
