@@ -3,8 +3,6 @@
 #include <vector>
 #include <stdlib.h>
 
-#include <iostream>
-
 constexpr float TOLERANCE = 0.001;
 
 Contact EPA(Simplex2& simplex, const Polygon& a, const Polygon& b)
