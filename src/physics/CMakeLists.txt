@@ -10,4 +10,7 @@ add_library(physics STATIC
     collision/detection/collision.cpp
     collision/detection/gjk.cpp
     collision/detection/epa.cpp
+    collision/resolution/constraints/constraint.cpp
+    collision/resolution/constraints/contact_constraint.cpp
+    collision/resolution/constraints/contact_solver.cpp
 )

@@ -13,9 +13,38 @@ RigidBody::RigidBody(Polygon polygon, float mass)
     calc_moment_of_inertia();
 }
 
+Vector2 RigidBody::get_vel() const
+{
+    return m_vel;
+}
+
+float RigidBody::get_angVel() const
+{
+    return m_angularVelocity;
+}
+
 float RigidBody::get_mass() const
 {
     return m_mass;
+}
+
+float RigidBody::get_invMass() const
+{
+    return m_invMass;
+}
+
+float RigidBody::get_invInertia() const
+{
+    return m_invInertia;
+}
+
+void RigidBody::add_vel(const Vector2& v)
+{
+    m_vel += v;
+}
+void RigidBody::add_angVel(float a)
+{
+    m_angularVelocity += a;
 }
 
 void RigidBody::apply_force(const Vector2& f, const Vector2& p)

@@ -9,36 +9,38 @@ Vector2::Vector2(float x, float y, float z) : x(x), y(y), z(z) {}
 
 Vector2 Vector2::operator+(const Vector2& other) const
 {
-    return {x + other.x, y + other.y};
+    return {x + other.x, y + other.y, z + other.z};
 }
 
 Vector2& Vector2::operator+=(const Vector2& other)
 {
     x += other.x;
     y += other.y;
+    z += other.z;
 
     return *this;
 }
 
 Vector2 Vector2::operator-(const Vector2& other) const
 {
-    return {x - other.x, y - other.y};
+    return {x - other.x, y - other.y, z - other.z};
 }
 
 Vector2 Vector2::operator/(float divisor) const
 {
-    return {x/divisor, y/divisor};
+    return {x/divisor, y/divisor, z/divisor};
 }
 
 Vector2 Vector2::operator*(float scalar) const
 {
-    return {scalar*x, scalar*y};
+    return {scalar*x, scalar*y, scalar*z};
 }
 
 Vector2& Vector2::operator*=(float scalar)
 {
     x *= scalar;
     y *= scalar;
+    z *= scalar;
 
     return *this;
 }
@@ -50,7 +52,7 @@ Vector2 operator*(float scalar, const Vector2& v)
 
 float Vector2::dot(const Vector2& other) const
 {
-    return x*other.x + y*other.y;
+    return x*other.x + y*other.y + z*other.z;
 }
 
 Vector2 Vector2::cross(const Vector2& other) const

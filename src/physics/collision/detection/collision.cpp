@@ -1,6 +1,6 @@
 #include "collision.h"
 
-Collision::Collision(CollisionBody* a, CollisionBody* b, Contact contact)
+Collision::Collision(RigidBody* a, RigidBody* b, Contact contact)
     : a(a),
       b(b),
       contact(contact)

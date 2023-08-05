@@ -21,7 +21,14 @@ private:
 public:
     RigidBody(Polygon polygon, float mass);
 
+    Vector2 get_vel() const;
+    float get_angVel() const;
     float get_mass() const;
+    float get_invMass() const;
+    float get_invInertia() const;
+    
+    void add_vel(const Vector2& v);
+    void add_angVel(float a);
 
     void apply_force(const Vector2& f, const Vector2& p);
     void update_vel(double dt);

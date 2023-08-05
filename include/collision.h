@@ -1,13 +1,13 @@
 #pragma once
 
-#include "collision_body.h"
+#include "rigid_body.h"
 #include "contact.h"
 
 struct Collision
 {
-    Collision(CollisionBody* a, CollisionBody* b, Contact contact);
+    Collision(RigidBody* a, RigidBody* b, Contact contact);
 
-    CollisionBody* a;
-    CollisionBody* b;
+    RigidBody* a;
+    RigidBody* b;
     Contact contact;
 };
