@@ -2,15 +2,15 @@
 
 Simplex2 GJK(const Polygon& a, const Polygon& b)
 {
-    Vector2 support = CSO_support(a, b, {1, 0});
+    CSOSupport support(a, b, {1, 0});
     Simplex2 supports;
     supports.push_front(support);
-    Vector2 direction = -1*support;
+    Vector2 direction = -1*support.c;
     
     while (true) {
-        support = CSO_support(a, b, direction);
+        support = CSOSupport(a, b, direction);
         
-        if (direction.dot(support) <= 0) {
+        if (direction.dot(support.c) <= 0) {
             return supports; // Fail
         }
         
@@ -35,8 +35,12 @@ bool update_simplex(Simplex2& supports, Vector2& direction)
 
 bool line_case(Simplex2& supports, Vector2& direction)
 {
-    Vector2 a = supports[0];
-    Vector2 b = supports[1];
+
+    CSOSupport A = supports[0];
+    CSOSupport B = supports[1];
+
+    Vector2 a = A.c;
+    Vector2 b = B.c;
     
     Vector2 ab = b - a;
     Vector2 ao = -1*a;
@@ -44,7 +48,7 @@ bool line_case(Simplex2& supports, Vector2& direction)
     if (ab.dot(ao) > 0) {
         direction = ab.cross(ao).cross(ab);
     } else {
-        supports = {a};
+        supports = {A};
         direction = ao;
     }
     
@@ -54,9 +58,13 @@ bool line_case(Simplex2& supports, Vector2& direction)
 
 bool triangle_case(Simplex2& supports, Vector2& direction)
 {
-    Vector2 a = supports[0];
-    Vector2 b = supports[1];
-    Vector2 c = supports[2];
+    CSOSupport A = supports[0];
+    CSOSupport B = supports[1];
+    CSOSupport C = supports[2];
+
+    Vector2 a = A.c;
+    Vector2 b = B.c;
+    Vector2 c = C.c;
 
     Vector2 ab = b - a;
     Vector2 ac = c - a;
@@ -65,14 +73,14 @@ bool triangle_case(Simplex2& supports, Vector2& direction)
     
     if (abc.cross(ac).dot(ao) > 0) {
         if (ac.dot(ao) > 0) {
-            supports = {a, c};
+            supports = {A, C};
             direction = ac.cross(ao).cross(ac);
         } else {
-            supports = {a, b};
+            supports = {A, B};
             return line_case(supports, direction);
         }
     } else if (ab.cross(abc).dot(ao) > 0) {
-        supports = {a, b};
+        supports = {A, B};
         return line_case(supports, direction);
     } else {
         return true;
