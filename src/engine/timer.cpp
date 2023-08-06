@@ -22,15 +22,15 @@ void Timer::toggle_pause()
     m_paused = !m_paused;
 }
 
-double Timer::get_dt()
+float Timer::get_dt()
 {
-    double dt;
+    float dt;
     
     if (m_paused) return 0;
     if (!m_started) start();
     
     m_new_time = SDL_GetTicks64();
-    dt = (double)(m_new_time - m_old_time)/1000;
+    dt = (float)(m_new_time - m_old_time)/1000;
     m_old_time = m_new_time;
     
     return dt;

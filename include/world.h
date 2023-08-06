@@ -29,6 +29,6 @@ public:
     void set_gravity(const Vector2& gravity);
     void set_gravity_point(const Vector2& point, float mag);
 
-    void solve_collisions(double dt);
-    void step(double dt);
+    void solve_collisions(float dt);
+    void step(float dt);
 };

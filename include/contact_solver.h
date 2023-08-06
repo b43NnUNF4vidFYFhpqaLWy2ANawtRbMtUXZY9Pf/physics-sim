@@ -9,5 +9,5 @@ private:
     float beta;
 public:
     ContactConstraintSolver(unsigned iterations, float beta);
-    void solve(std::vector<Collision>& collisions, double dt) override;
+    void solve(std::vector<Collision>& collisions, float dt) override;
 };

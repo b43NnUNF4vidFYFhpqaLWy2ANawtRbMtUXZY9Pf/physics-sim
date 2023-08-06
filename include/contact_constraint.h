@@ -1,14 +1,12 @@
 #pragma once
 
 #include "constraint.h"
-#include "collision_solver.h"
 #include "collision.h"
 
 class ContactConstraint : public Constraint
 {
 private:
     Collision& collision;
-    float dt;
 
     Vector2 r_a, r_b;
     Vector2 n;

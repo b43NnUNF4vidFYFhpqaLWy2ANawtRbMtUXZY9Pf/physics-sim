@@ -6,7 +6,7 @@ ContactConstraintSolver::ContactConstraintSolver(unsigned iterations, float beta
       beta(beta)
 {}
 
-void ContactConstraintSolver::solve(std::vector<Collision>& collisions, double dt)
+void ContactConstraintSolver::solve(std::vector<Collision>& collisions, float dt)
 {
     if (dt == 0) return;
 

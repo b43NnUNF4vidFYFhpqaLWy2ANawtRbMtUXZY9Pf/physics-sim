@@ -61,7 +61,7 @@ void RigidBody::apply_force(const Vector2& f, const Vector2& p)
     m_torque += r.cross(f).z;
 }
 
-void RigidBody::update_vel(double dt)
+void RigidBody::update_vel(float dt)
 {
     m_vel += (m_force/m_mass)*dt;
     m_force = {0, 0, 0};
@@ -70,7 +70,7 @@ void RigidBody::update_vel(double dt)
     m_torque = 0.0f;
 }
 
-void RigidBody::update_pos(double dt)
+void RigidBody::update_pos(float dt)
 {
     m_polygon.move(m_vel*dt);
     m_polygon.rotate(m_angularVelocity*dt);

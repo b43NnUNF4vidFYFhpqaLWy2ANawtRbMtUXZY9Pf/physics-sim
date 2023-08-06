@@ -3,9 +3,8 @@
 
 // TODO: Find out how to deal with static body to rigid body collision
 ContactConstraint::ContactConstraint(Collision& collision, float beta, float dt) 
-    : Constraint(beta),
+    : Constraint(beta, dt),
       collision(collision),
-      dt(dt),
 
       r_a(collision.contact.a - collision.a->get_polygon().get_centroid()),
       r_b(collision.contact.b - collision.b->get_polygon().get_centroid()),

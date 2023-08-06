@@ -34,6 +34,6 @@ public:
     void add_angVel(float a);
 
     void apply_force(const Vector2& f, const Vector2& p);
-    void update_vel(double dt);
-    void update_pos(double dt);
+    void update_vel(float dt);
+    void update_pos(float dt);
 };

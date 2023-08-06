@@ -13,5 +13,5 @@ public:
 
     void start();
     void toggle_pause();
-    double get_dt();
+    float get_dt();
 };

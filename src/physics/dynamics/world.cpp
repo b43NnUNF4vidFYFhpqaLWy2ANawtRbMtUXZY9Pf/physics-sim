@@ -65,7 +65,7 @@ void World::set_gravity_point(const Vector2& point, float mag)
     m_gravity_mag = mag;
 }
 
-void World::solve_collisions(double dt)
+void World::solve_collisions(float dt)
 {
     std::vector<Collision> collisions;
     
@@ -88,7 +88,7 @@ void World::solve_collisions(double dt)
     }
 }
 
-void World::step(double dt)
+void World::step(float dt)
 {
     for (CollisionBody* object : m_objects) {
         RigidBody* rigid_body = dynamic_cast<RigidBody*>(object);
