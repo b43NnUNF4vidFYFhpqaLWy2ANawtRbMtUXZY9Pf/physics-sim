@@ -78,12 +78,14 @@ void World::solve_collisions(double dt)
     }
     
     for (CollisionSolver* solver : m_solvers) {
-        solver->solve(&collisions, dt);
+        solver->solve(collisions, dt);
     }
 }
 
 void World::step(double dt)
 {
+    if (dt == 0) return;
+
     for (CollisionBody* object : m_objects) {
         RigidBody* rigid_body = dynamic_cast<RigidBody*>(object);
 

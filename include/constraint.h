@@ -4,8 +4,9 @@ class Constraint
 {
 protected:
     float m_total_lambda;
+    float beta;
 public:
-    Constraint();
+    Constraint(float beta);
 
-    virtual void solve(double dt) = 0;
+    virtual void solve() = 0;
 };

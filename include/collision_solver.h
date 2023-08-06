@@ -6,5 +6,5 @@
 class CollisionSolver
 {
 public:
-    virtual void solve(std::vector<Collision>* collisions, double dt) = 0;
+    virtual void solve(std::vector<Collision>& collisions, double dt) = 0;
 };
