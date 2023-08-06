@@ -11,24 +11,31 @@ constexpr int SCREEN_HEIGHT = 720;
 
 int main()
 {
-    Vector2 a(500, 399);
-    Vector2 b(500, 499);
-    Vector2 c(600, 499);
-    Vector2 d(600, 399);
+    Vector2 a_1(500, 500);
+    Vector2 a_2(500, 600);
+    Vector2 a_3(600, 600);
+    Vector2 a_4(600, 500);
     
-    Polygon poly({a, b, c, d});
-    RigidBody body(poly, 50, 0.25);
+    Polygon a({a_1, a_2, a_3, a_4});
+    RigidBody a_body(a, 5000, 0.1);
+    a_body.add_angVel(0.78);
     
-    Polygon ground_rect({ {300,300}, {300, 400}, {800, 400}, {800, 300} });
-    RigidBody ground(ground_rect, 500, 0.25);
+    Vector2 b_1(500, 200);
+    Vector2 b_2(500, 300);
+    Vector2 b_3(600, 300);
+    Vector2 b_4(600, 200);
+
+    Polygon b({b_1, b_2, b_3, b_4});
+    RigidBody b_body(b, 5000, 0.1);
 
     World world;
-    Vector2 gravity(0.0, -9.82);
-    world.set_gravity(gravity);
-    world.add_object(&body);
-    world.add_object(&ground);
+/*     Vector2 gravity(0.0, -9.82);
+    world.set_gravity(gravity); */
+    world.set_gravity_point({SCREEN_WIDTH/2, SCREEN_HEIGHT/2}, 9.82);
+    world.add_object(&a_body);
+    world.add_object(&b_body);
     
-    ContactConstraintSolver contact_solver(10, 0.0005);
+    ContactConstraintSolver contact_solver(6, 0.1);
     world.add_solver(&contact_solver);
 
     Window window(SCREEN_WIDTH, SCREEN_HEIGHT);

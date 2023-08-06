@@ -10,7 +10,10 @@ class World
 private:
     std::vector<RigidBody*> m_objects;
     std::vector<CollisionSolver*> m_solvers;
+
     Vector2 m_gravity;
+    Vector2 m_gravity_point;
+    float m_gravity_mag;
 public:
     World();
 
@@ -24,6 +27,8 @@ public:
     void remove_solver(CollisionSolver* solver);
 
     void set_gravity(const Vector2& gravity);
+    void set_gravity_point(const Vector2& point, float mag);
+
     void solve_collisions(double dt);
     void step(double dt);
 };
