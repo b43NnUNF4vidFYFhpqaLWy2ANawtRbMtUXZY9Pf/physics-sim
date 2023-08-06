@@ -17,7 +17,7 @@ int main()
     Vector2 a_4(600, 500);
     
     Polygon a({a_1, a_2, a_3, a_4});
-    RigidBody a_body(a, 5000, 0.1);
+    RigidBody a_body(a, 500, 0.1);
     a_body.add_angVel(0.78);
     
     Vector2 b_1(500, 200);
@@ -26,12 +26,13 @@ int main()
     Vector2 b_4(600, 200);
 
     Polygon b({b_1, b_2, b_3, b_4});
-    RigidBody b_body(b, 5000, 0.1);
+    RigidBody b_body(b, 500, 0.1);
+    b_body.add_angVel(-0.78);
 
     World world;
 /*     Vector2 gravity(0.0, -9.82);
     world.set_gravity(gravity); */
-    world.set_gravity_point({SCREEN_WIDTH/2, SCREEN_HEIGHT/2}, 9.82);
+    world.set_gravity_point({SCREEN_WIDTH/2, SCREEN_HEIGHT/2}, 10*9.82);
     world.add_object(&a_body);
     world.add_object(&b_body);
     

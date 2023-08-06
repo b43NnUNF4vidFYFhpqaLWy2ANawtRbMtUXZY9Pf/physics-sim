@@ -8,6 +8,8 @@ ContactConstraintSolver::ContactConstraintSolver(unsigned iterations, float beta
 
 void ContactConstraintSolver::solve(std::vector<Collision>& collisions, double dt)
 {
+    if (dt == 0) return;
+
     std::vector<ContactConstraint> constraints;
     constraints.reserve(collisions.size());
     
