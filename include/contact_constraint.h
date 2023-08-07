@@ -2,11 +2,14 @@
 
 #include "constraint.h"
 #include "collision.h"
+#include "rigid_body.h"
 
 class ContactConstraint : public Constraint
 {
 private:
-    Collision& collision;
+    RigidBody* A;
+    RigidBody* B;
+    Contact& contact;
 
     Vector2 r_a, r_b;
     Vector2 n;
@@ -15,6 +18,6 @@ private:
     float m_eff;
     float c_r;
 public:
-    ContactConstraint(Collision& collision, float beta, float dt);
+    ContactConstraint(RigidBody* A, RigidBody* B, Contact& contact, float beta, float dt);
     void solve() override;
 };

@@ -14,12 +14,12 @@ void World::reserve_objects(std::size_t cap)
     m_objects.reserve(cap);
 }
 
-void World::add_object(RigidBody* object)
+void World::add_object(CollisionBody* object)
 {
     m_objects.push_back(object);
 }
 
-void World::remove_object(RigidBody* object)
+void World::remove_object(CollisionBody* object)
 {
     if (!object) return;
     
@@ -29,7 +29,7 @@ void World::remove_object(RigidBody* object)
     m_objects.erase(itr);
 }
 
-const std::vector<RigidBody*>& World::get_objects() const
+const std::vector<CollisionBody*>& World::get_objects() const
 {
     return m_objects;
 }
@@ -70,8 +70,8 @@ void World::solve_collisions(float dt)
     std::vector<Collision> collisions;
     
     // TODO: https://box2d.org/files/ErinCatto_DynamicBVH_Full.pdf
-    for (RigidBody* a : m_objects) {
-        for (RigidBody* b : m_objects) {
+    for (CollisionBody* a : m_objects) {
+        for (CollisionBody* b : m_objects) {
             if (a == b) break;
             
             Simplex2 simplex = GJK(a->get_polygon(), b->get_polygon());

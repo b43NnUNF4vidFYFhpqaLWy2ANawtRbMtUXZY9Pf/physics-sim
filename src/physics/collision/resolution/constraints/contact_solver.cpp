@@ -1,5 +1,6 @@
 #include "contact_solver.h"
 #include "contact_constraint.h"
+#include "rigid_body.h"
 
 ContactConstraintSolver::ContactConstraintSolver(unsigned iterations, float beta)
     : m_iterations(iterations),
@@ -10,15 +11,22 @@ void ContactConstraintSolver::solve(std::vector<Collision>& collisions, float dt
 {
     if (dt == 0) return;
 
-    std::vector<ContactConstraint> constraints;
-    constraints.reserve(collisions.size());
+    std::vector<ContactConstraint> contact_constraints;
+    contact_constraints.reserve(collisions.size());
     
     for (Collision& collision: collisions) {
-        constraints.emplace_back(collision, beta, dt);
+        RigidBody* a = dynamic_cast<RigidBody*>(collision.a);
+        RigidBody* b = dynamic_cast<RigidBody*> (collision.b);
+        
+        if (a && b) {
+            contact_constraints.emplace_back(a, b, collision.contact, beta, dt);
+        } else if (a != b) {
+            // TODO: Plane constraints
+        }
     }
 
     for (unsigned i = 0; i < m_iterations; i++) {
-        for (ContactConstraint& constraint : constraints) {
+        for (ContactConstraint& constraint : contact_constraints) {
             constraint.solve();
         }
     }
