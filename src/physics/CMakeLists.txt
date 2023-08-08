@@ -13,4 +13,6 @@ add_library(physics STATIC
     collision/resolution/constraints/constraint.cpp
     collision/resolution/constraints/contact_constraint.cpp
     collision/resolution/constraints/contact_solver.cpp
+    collision/resolution/constraints/plane_constraint.cpp
+    collision/resolution/constraints/plane_solver.cpp
 )

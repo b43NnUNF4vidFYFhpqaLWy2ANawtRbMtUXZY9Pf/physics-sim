@@ -1,7 +1,6 @@
 #include "constraint.h"
 
-Constraint::Constraint(float beta, float dt)
+Constraint::Constraint(float beta)
     : m_total_lambda(0),
-      beta(beta),
-      dt(dt)
+      beta(beta)
 {}

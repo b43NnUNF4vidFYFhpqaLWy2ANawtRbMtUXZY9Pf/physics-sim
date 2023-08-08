@@ -2,10 +2,11 @@
 #include <algorithm>
 
 ContactConstraint::ContactConstraint(RigidBody* A, RigidBody* B, Contact& contact, float beta, float dt) 
-    : Constraint(beta, dt),
+    : Constraint(beta),
       A(A),
       B(B),
       contact(contact),
+      dt(dt),
 
       r_a(contact.a - A->get_polygon().get_centroid()),
       r_b(contact.b - B->get_polygon().get_centroid()),

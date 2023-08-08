@@ -12,10 +12,10 @@ private:
     std::vector<CollisionSolver*> m_solvers;
 
     Vector2 m_gravity;
-    Vector2 m_gravity_point;
-    float m_gravity_mag;
 public:
     World();
+
+    void set_gravity(const Vector2& gravity);
 
     void reserve_objects(std::size_t cap);
     void add_object(CollisionBody* object);
@@ -25,9 +25,6 @@ public:
     void reserve_solvers(std::size_t cap);
     void add_solver(CollisionSolver* solver);
     void remove_solver(CollisionSolver* solver);
-
-    void set_gravity(const Vector2& gravity);
-    void set_gravity_point(const Vector2& point, float mag);
 
     void solve_collisions(float dt);
     void step(float dt);

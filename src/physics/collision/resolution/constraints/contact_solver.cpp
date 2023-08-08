@@ -11,22 +11,20 @@ void ContactConstraintSolver::solve(std::vector<Collision>& collisions, float dt
 {
     if (dt == 0) return;
 
-    std::vector<ContactConstraint> contact_constraints;
-    contact_constraints.reserve(collisions.size());
+    std::vector<ContactConstraint> constraints;
+    constraints.reserve(collisions.size());
     
     for (Collision& collision: collisions) {
         RigidBody* a = dynamic_cast<RigidBody*>(collision.a);
-        RigidBody* b = dynamic_cast<RigidBody*> (collision.b);
+        RigidBody* b = dynamic_cast<RigidBody*>(collision.b);
         
         if (a && b) {
-            contact_constraints.emplace_back(a, b, collision.contact, beta, dt);
-        } else if (a != b) {
-            // TODO: Plane constraints
+            constraints.emplace_back(a, b, collision.contact, beta, dt);
         }
     }
 
     for (unsigned i = 0; i < m_iterations; i++) {
-        for (ContactConstraint& constraint : contact_constraints) {
+        for (ContactConstraint& constraint : constraints) {
             constraint.solve();
         }
     }

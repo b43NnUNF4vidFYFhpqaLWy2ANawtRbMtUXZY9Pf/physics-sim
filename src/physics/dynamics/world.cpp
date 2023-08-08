@@ -59,12 +59,6 @@ void World::set_gravity(const Vector2& gravity)
     m_gravity = gravity;
 }
 
-void World::set_gravity_point(const Vector2& point, float mag)
-{
-    m_gravity_point = point;
-    m_gravity_mag = mag;
-}
-
 void World::solve_collisions(float dt)
 {
     std::vector<Collision> collisions;
@@ -94,13 +88,7 @@ void World::step(float dt)
         RigidBody* rigid_body = dynamic_cast<RigidBody*>(object);
 
         if (rigid_body) {
-            float m = rigid_body->get_mass();
-            Vector2 c = rigid_body->get_polygon().get_centroid();
-            Vector2 f_g = (m_gravity_point - c).norm()*m_gravity_mag*m;
-
-            rigid_body->apply_force(m*m_gravity, c);
-            rigid_body->apply_force(f_g, c);
-
+            rigid_body->apply_force(rigid_body->get_mass()*m_gravity, rigid_body->get_polygon().get_centroid());
             rigid_body->update_vel(dt);
         }
     }

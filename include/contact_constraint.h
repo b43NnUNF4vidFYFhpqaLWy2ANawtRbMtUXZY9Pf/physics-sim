@@ -10,6 +10,7 @@ private:
     RigidBody* A;
     RigidBody* B;
     Contact& contact;
+    float dt;
 
     Vector2 r_a, r_b;
     Vector2 n;
