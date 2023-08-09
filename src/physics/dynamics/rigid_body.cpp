@@ -3,10 +3,11 @@
 #include <cstddef>
 #include <cmath>
 
-RigidBody::RigidBody(Polygon polygon, float mass, float restitution)
+RigidBody::RigidBody(Polygon polygon, float mass, float restitution, float friction)
     : CollisionBody(polygon),
       m_mass(mass),
       m_restitution(restitution),
+      m_friction(friction),
       m_invMass(1/mass),
       m_angularVelocity(0),
       m_torque(0)
@@ -42,6 +43,11 @@ float RigidBody::get_invInertia() const
 float RigidBody::get_restitution() const
 {
     return m_restitution;
+}
+
+float RigidBody::get_friction() const
+{
+    return m_friction;
 }
 
 void RigidBody::add_vel(const Vector2& v)

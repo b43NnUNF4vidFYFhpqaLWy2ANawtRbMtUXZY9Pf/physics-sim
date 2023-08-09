@@ -18,10 +18,11 @@ private:
     float m_invInertia;
     
     float m_restitution;
+    float m_friction;
 
     void calc_moment_of_inertia();
 public:
-    RigidBody(Polygon polygon, float mass, float restitution);
+    RigidBody(Polygon polygon, float mass, float restitution, float friction);
 
     Vector2 get_vel() const;
     float get_angVel() const;
@@ -29,6 +30,7 @@ public:
     float get_invMass() const;
     float get_invInertia() const;
     float get_restitution() const;
+    float get_friction() const;
     
     void add_vel(const Vector2& v);
     void add_angVel(float a);
