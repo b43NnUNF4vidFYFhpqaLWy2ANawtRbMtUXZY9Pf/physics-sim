@@ -35,9 +35,10 @@ void AABBTree::update()
 void AABBTree::populate_invalid_nodes(std::shared_ptr<Node>& root)
 {
     if ( root->is_leaf() ) {
-        root->update_tight();
+        Polygon& polygon = root->body->get_polygon();
+        polygon.update_AABB();
 
-        if ( !(root->enlarged.contains(root->tight)) ) {
+        if ( !(root->enlarged.contains(polygon.m_box)) ) {
             m_invalid.push_back(root);
         }
     } else {

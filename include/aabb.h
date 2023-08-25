@@ -1,7 +1,8 @@
 #pragma once
 
-#include "polygon.h"
-#include <memory>
+#include "vector.h"
+
+class Polygon;
 
 struct AABB
 {

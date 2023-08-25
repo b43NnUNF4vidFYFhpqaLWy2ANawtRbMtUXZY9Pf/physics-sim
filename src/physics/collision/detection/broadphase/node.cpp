@@ -23,8 +23,9 @@ void Node::make_branch(std::shared_ptr<Node>& a, std::shared_ptr<Node>& b)
 
 void Node::make_leaf(CollisionBody* body)
 {
-    AABB box(body->get_polygon());
-    tight = box;
+    Polygon& polygon = body->get_polygon();
+    AABB box(polygon);
+    polygon.m_box = box;
 
     left_child = nullptr;
     right_child = nullptr;
@@ -33,14 +34,10 @@ void Node::make_leaf(CollisionBody* body)
     body->m_node = shared_from_this();
 }
 
-void Node::update_tight()
-{
-    tight = AABB(body->get_polygon());
-}
-
 void Node::refit_AABB(float margin)
 {
     if ( is_leaf() ) {
+        const AABB& tight = body->get_polygon().m_box;
         const Vector2 margin_vec = {margin, margin};
         enlarged.min = tight.min - margin_vec;
         enlarged.max = tight.max + margin_vec;

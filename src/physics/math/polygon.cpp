@@ -62,6 +62,11 @@ const std::vector<Vector2>& Polygon::get_vertices() const
     return m_vertices;
 }
 
+void Polygon::update_AABB()
+{
+    m_box = AABB(*this);
+}
+
 const Vector2& Polygon::get_centroid() const
 {
     return m_centroid;

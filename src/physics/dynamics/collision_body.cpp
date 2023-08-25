@@ -5,7 +5,7 @@ CollisionBody::CollisionBody(Polygon polygon)
 {
 }
 
-const Polygon& CollisionBody::get_polygon() const
+Polygon& CollisionBody::get_polygon()
 {
     return m_polygon;
 }
