@@ -6,10 +6,13 @@ add_library(physics STATIC
     dynamics/rigid_body.cpp
     math/vector.cpp
     math/polygon.cpp
-    collision/detection/simplex.cpp
-    collision/detection/collision.cpp
-    collision/detection/gjk.cpp
-    collision/detection/epa.cpp
+    collision/detection/broadphase/aabb.cpp
+    collision/detection/broadphase/node.cpp
+    collision/detection/broadphase/bvh.cpp
+    collision/detection/narrowphase/simplex.cpp
+    collision/detection/narrowphase/collision.cpp
+    collision/detection/narrowphase/gjk.cpp
+    collision/detection/narrowphase/epa.cpp
     collision/resolution/constraints/constraint.cpp
     collision/resolution/constraints/contact_constraint.cpp
     collision/resolution/constraints/contact_solver.cpp
