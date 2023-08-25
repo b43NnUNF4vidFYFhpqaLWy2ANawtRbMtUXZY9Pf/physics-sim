@@ -4,13 +4,14 @@ AABBTree::AABBTree(float margin)
     : m_margin(margin)
 {}
 
-void AABBTree::update()
+void AABBTree::update(std::size_t objects)
 {
     if (m_root) {
         if ( m_root->is_leaf() ) {
             m_root->refit_AABB(m_margin);
         } else {
             m_invalid.clear();
+            m_invalid.reserve(objects);
             populate_invalid_nodes(m_root);
             
             for (std::shared_ptr<Node>& node : m_invalid) {

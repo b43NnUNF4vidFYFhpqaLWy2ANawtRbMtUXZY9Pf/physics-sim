@@ -16,7 +16,7 @@ private:
 public:
     AABBTree(float margin);
     
-    void update();
+    void update(std::size_t objects);
     void insert(CollisionBody* body);
     void remove(CollisionBody* body);
 };

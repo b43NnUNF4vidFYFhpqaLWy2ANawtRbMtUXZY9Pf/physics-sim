@@ -22,7 +22,7 @@ int main()
     Polygon ground_poly( { {100, 100}, {100, 200}, {550, 200}, {950, 150}, {1200, 100} } );
     CollisionBody ground(ground_poly);
 
-    World world(100);
+    World world(0.2);
     Vector2 gravity(0.0, -10*9.82);
     world.set_gravity(gravity);
     world.add_object(&a_body);

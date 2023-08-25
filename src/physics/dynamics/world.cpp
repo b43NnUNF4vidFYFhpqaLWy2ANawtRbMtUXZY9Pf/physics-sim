@@ -65,7 +65,7 @@ void World::solve_collisions(float dt)
 {
     std::vector<Collision> collisions;
     
-    m_bvh.update();
+    m_bvh.update(m_objects.size());
     
     // TODO: https://box2d.org/files/ErinCatto_DynamicBVH_Full.pdf
     for (CollisionBody* a : m_objects) {
