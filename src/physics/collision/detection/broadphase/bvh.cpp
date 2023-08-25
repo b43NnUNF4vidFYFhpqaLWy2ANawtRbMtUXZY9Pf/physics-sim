@@ -15,9 +15,9 @@ void AABBTree::update(std::size_t objects)
             populate_invalid_nodes(m_root);
             
             for (std::shared_ptr<Node>& node : m_invalid) {
-                std::shared_ptr<Node> parent = node->parent;
-                std::shared_ptr<Node> sibling = node->get_sibling();
-                std::shared_ptr<Node> grandparent_parent_link = parent->parent ? (parent == parent->parent->left_child)
+                std::shared_ptr<Node>& parent = node->parent;
+                std::shared_ptr<Node>& sibling = node->get_sibling();
+                std::shared_ptr<Node>& grandparent_parent_link = parent->parent ? (parent == parent->parent->left_child)
                     ? parent->parent->left_child : parent->parent->right_child
                 : m_root;
                 
