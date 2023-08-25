@@ -9,7 +9,7 @@ Node::Node()
 
 bool Node::is_leaf() const
 {
-    return !(left_child || right_child);
+    return !left_child && !right_child;
 }
 
 void Node::make_branch(std::shared_ptr<Node>& a, std::shared_ptr<Node>& b)
