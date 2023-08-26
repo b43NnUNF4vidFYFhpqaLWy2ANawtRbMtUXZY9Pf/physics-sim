@@ -1,4 +1,5 @@
 #include "bvh.h"
+#include <stack>
 
 AABBTree::AABBTree(float margin)
     : m_margin(margin)
@@ -10,11 +11,9 @@ void AABBTree::update(std::size_t objects)
         if ( m_root->is_leaf() ) {
             m_root->refit_AABB(m_margin);
         } else {
-            m_invalid.clear();
-            m_invalid.reserve(objects);
-            populate_invalid_nodes(m_root);
+            std::vector<std::shared_ptr<Node>> invalids = get_invalid_nodes(m_root, objects);
             
-            for (std::shared_ptr<Node>& node : m_invalid) {
+            for (std::shared_ptr<Node>& node : invalids) {
                 std::shared_ptr<Node>& parent = node->parent;
                 std::shared_ptr<Node>& sibling = node->get_sibling();
                 std::shared_ptr<Node>& grandparent_parent_link = parent->parent ? (parent == parent->parent->left_child)
@@ -27,25 +26,35 @@ void AABBTree::update(std::size_t objects)
                 node->refit_AABB(m_margin);
                 insert_node(node, m_root);
             }
-            
-            m_invalid.clear();
         }
     }
 }
 
-void AABBTree::populate_invalid_nodes(std::shared_ptr<Node>& root)
+std::vector<std::shared_ptr<Node>> AABBTree::get_invalid_nodes(std::shared_ptr<Node>& root, std::size_t objects)
 {
-    if ( root->is_leaf() ) {
-        Polygon& polygon = root->body->get_polygon();
-        polygon.update_AABB();
+    std::vector<std::shared_ptr<Node>> invalids;
+    invalids.reserve(objects);
+    std::stack<std::shared_ptr<Node>> stack;
 
-        if ( !(root->enlarged.contains(polygon.m_box)) ) {
-            m_invalid.push_back(root);
+    stack.push(root);
+    while (!stack.empty()) {
+        std::shared_ptr<Node> node = stack.top();
+        stack.pop();
+
+        if ( node->is_leaf() ) {
+            Polygon& polygon = node->body->get_polygon();
+            polygon.update_AABB();
+
+            if ( !(node->enlarged.contains(polygon.m_box)) ) {
+                invalids.push_back(node);
+            }
+        } else {
+            if (node->left_child) stack.push(node->left_child);
+            if (node->right_child) stack.push(node->right_child);
         }
-    } else {
-        populate_invalid_nodes(root->left_child);
-        populate_invalid_nodes(root->right_child);
     }
+    
+    return invalids;
 }
 
 void AABBTree::insert(CollisionBody* body)
