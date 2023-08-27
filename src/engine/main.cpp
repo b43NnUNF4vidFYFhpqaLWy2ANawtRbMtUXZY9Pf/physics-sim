@@ -3,6 +3,8 @@
 #include "polygon.h"
 #include "collision_body.h"
 #include "rigid_body.h"
+#include "bvh.h"
+#include "bruteforce.h"
 #include "world.h"
 #include "contact_solver.h"
 #include "plane_solver.h"
@@ -22,9 +24,13 @@ int main()
     Polygon ground_poly( { {100, 100}, {100, 200}, {550, 200}, {950, 150}, {1200, 100} } );
     CollisionBody ground(ground_poly);
 
-    World world(0.2);
+    World world;
+    Bruteforce collision_detector;
+    world.set_collision_detector(&collision_detector);
+
     Vector2 gravity(0.0, -10*9.82);
     world.set_gravity(gravity);
+
     world.add_object(&a_body);
     world.add_object(&b_body);
     world.add_object(&ground);

@@ -2,7 +2,7 @@
 
 #include "rigid_body.h"
 #include "collision_solver.h"
-#include "bvh.h"
+#include "collision_detector.h"
 #include <vector>
 #include <cstddef>
 
@@ -16,11 +16,10 @@ private:
 
     void solve_collisions(float dt);
 public:
-    AABBTree m_bvh;
+    CollisionDetector* m_collision_detector;
 
-    World(float aabb_margin);
-
-    void set_gravity(const Vector2& gravity);
+    World() = default;
+    void set_collision_detector(CollisionDetector* collision_detector);
 
     void reserve_objects(std::size_t cap);
     void add_object(CollisionBody* object);
@@ -31,5 +30,7 @@ public:
     void add_solver(CollisionSolver* solver);
     void remove_solver(CollisionSolver* solver);
 
+    void set_gravity(const Vector2& gravity);
+    
     void step(float dt);
 };

@@ -1,9 +1,8 @@
 #include "bvh.h"
 #include <stack>
 
-AABBTree::AABBTree(std::vector<CollisionBody*>& objects, float margin)
-    : m_objects(objects),
-      m_margin(margin)
+AABBTree::AABBTree(float margin)
+    : m_margin(margin)
 {}
 
 void AABBTree::update()
@@ -34,7 +33,7 @@ void AABBTree::update()
 std::vector<std::shared_ptr<Node>> AABBTree::get_invalid_nodes(std::shared_ptr<Node>& root)
 {
     std::vector<std::shared_ptr<Node>> invalids;
-    invalids.reserve(m_objects.size());
+    invalids.reserve(m_objects->size());
     std::stack<std::shared_ptr<Node>> stack;
 
     stack.push(root);
@@ -125,3 +124,9 @@ void AABBTree::remove_node(std::shared_ptr<Node>& node)
         m_root = nullptr; // node gets deleted
     }
 }
+
+std::vector<Collision> AABBTree::query(CollisionBody* body) const
+{}
+
+std::vector<Collision> AABBTree::get_collisions() const
+{}

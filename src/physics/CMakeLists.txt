@@ -6,9 +6,11 @@ add_library(physics STATIC
     dynamics/rigid_body.cpp
     math/vector.cpp
     math/polygon.cpp
-    collision/detection/broadphase/aabb.cpp
-    collision/detection/broadphase/node.cpp
-    collision/detection/broadphase/bvh.cpp
+    collision/detection/broadphase/collision_detector.cpp
+    collision/detection/broadphase/bruteforce/bruteforce.cpp
+    collision/detection/broadphase/bvh/aabb.cpp
+    collision/detection/broadphase/bvh/node.cpp
+    collision/detection/broadphase/bvh/bvh.cpp
     collision/detection/narrowphase/simplex.cpp
     collision/detection/narrowphase/collision.cpp
     collision/detection/narrowphase/gjk.cpp
