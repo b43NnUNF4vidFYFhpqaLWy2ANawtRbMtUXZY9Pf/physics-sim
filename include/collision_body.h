@@ -15,5 +15,4 @@ public:
     CollisionBody(Polygon polygon);
     virtual ~CollisionBody() = default; // Neccessary for dynamic_cast
     Polygon& get_polygon();
-    void update_AABB();
 };
