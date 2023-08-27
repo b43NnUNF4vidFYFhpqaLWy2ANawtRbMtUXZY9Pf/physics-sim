@@ -1,4 +1,6 @@
 #include "bvh.h"
+#include "gjk.h"
+#include "epa.h"
 #include <stack>
 
 AABBTree::AABBTree(float margin)
@@ -126,7 +128,44 @@ void AABBTree::remove_node(std::shared_ptr<Node>& node)
 }
 
 std::vector<Collision> AABBTree::query(CollisionBody* body) const
-{}
+{
+    const AABB query = body->get_polygon().m_box;
+
+    std::vector<Collision> collisions;
+    std::stack<std::shared_ptr<Node>> stack;
+    
+    stack.push(m_root);
+    while (!stack.empty()) {
+        std::shared_ptr<Node> node = stack.top();
+        stack.pop();
+        
+        if (node->enlarged.collides(query)) {
+            if (node->is_leaf() && node->body != body) {
+                Simplex2 simplex = GJK(body->get_polygon(), node->body->get_polygon());
+                
+                if (simplex.contains_origin() ) {
+                    Contact contact = EPA(simplex, body->get_polygon(), node->body->get_polygon());
+                    collisions.emplace_back(body, node->body, contact);
+                }
+            } else {
+                if (node->left_child) stack.push(node->left_child);
+                if (node->right_child) stack.push(node->right_child);
+            }
+        }
+    }
+    
+    return collisions;
+}
 
 std::vector<Collision> AABBTree::get_collisions() const
-{}
+{
+    std::vector<Collision> collisions;
+    
+    for (CollisionBody* const body : *m_objects) {
+        std::vector<Collision> target_collisions = query(body);
+        collisions.reserve(collisions.size() + target_collisions.size());
+        collisions.insert(collisions.end(), target_collisions.begin(), target_collisions.end());
+    }
+    
+    return collisions;
+}

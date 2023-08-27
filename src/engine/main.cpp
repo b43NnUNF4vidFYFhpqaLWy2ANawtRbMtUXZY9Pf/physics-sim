@@ -25,7 +25,7 @@ int main()
     CollisionBody ground(ground_poly);
 
     World world;
-    Bruteforce collision_detector;
+    AABBTree collision_detector(0.2);
     world.set_collision_detector(&collision_detector);
 
     Vector2 gravity(0.0, -10*9.82);
