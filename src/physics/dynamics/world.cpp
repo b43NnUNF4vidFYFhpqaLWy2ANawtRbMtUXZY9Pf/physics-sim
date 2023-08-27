@@ -7,7 +7,7 @@
 #include "gjk.h"
 #include "epa.h"
 
-World::World(float aabb_margin) : m_bvh(aabb_margin) {}
+World::World(float aabb_margin) : m_bvh(m_objects, aabb_margin) {}
 
 void World::reserve_objects(std::size_t cap)
 {
@@ -65,7 +65,7 @@ void World::solve_collisions(float dt)
 {
     std::vector<Collision> collisions;
     
-    m_bvh.update(m_objects.size());
+    m_bvh.update();
     
     // TODO: https://box2d.org/files/ErinCatto_DynamicBVH_Full.pdf
     for (CollisionBody* a : m_objects) {

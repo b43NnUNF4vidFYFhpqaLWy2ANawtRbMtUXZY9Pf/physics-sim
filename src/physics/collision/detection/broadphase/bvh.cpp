@@ -1,17 +1,18 @@
 #include "bvh.h"
 #include <stack>
 
-AABBTree::AABBTree(float margin)
-    : m_margin(margin)
+AABBTree::AABBTree(std::vector<CollisionBody*>& objects, float margin)
+    : m_objects(objects),
+      m_margin(margin)
 {}
 
-void AABBTree::update(std::size_t objects)
+void AABBTree::update()
 {
     if (m_root) {
         if ( m_root->is_leaf() ) {
             m_root->refit_AABB(m_margin);
         } else {
-            std::vector<std::shared_ptr<Node>> invalids = get_invalid_nodes(m_root, objects);
+            std::vector<std::shared_ptr<Node>> invalids = get_invalid_nodes(m_root);
             
             for (std::shared_ptr<Node>& node : invalids) {
                 std::shared_ptr<Node>& parent = node->parent;
@@ -30,10 +31,10 @@ void AABBTree::update(std::size_t objects)
     }
 }
 
-std::vector<std::shared_ptr<Node>> AABBTree::get_invalid_nodes(std::shared_ptr<Node>& root, std::size_t objects)
+std::vector<std::shared_ptr<Node>> AABBTree::get_invalid_nodes(std::shared_ptr<Node>& root)
 {
     std::vector<std::shared_ptr<Node>> invalids;
-    invalids.reserve(objects);
+    invalids.reserve(m_objects.size());
     std::stack<std::shared_ptr<Node>> stack;
 
     stack.push(root);
