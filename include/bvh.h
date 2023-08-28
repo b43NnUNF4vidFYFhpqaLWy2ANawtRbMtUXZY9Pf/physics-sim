@@ -16,9 +16,9 @@ private:
 public:
     AABBTree(float margin);
     
-    void update();
-    void insert(CollisionBody* body);
-    void remove(CollisionBody* body);
+    void update() override;
+    void insert(CollisionBody* body) override;
+    void remove(CollisionBody* body) override;
     std::vector<Collision> query(CollisionBody* const body) const override;
     std::vector<Collision> get_collisions() const override;
 };
