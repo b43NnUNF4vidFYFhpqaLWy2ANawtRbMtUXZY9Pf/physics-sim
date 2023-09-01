@@ -47,7 +47,7 @@ std::vector<std::shared_ptr<Node>> AABBTree::get_invalid_nodes(std::shared_ptr<N
             Polygon& polygon = node->body->get_polygon();
             polygon.update_AABB();
 
-            if ( !(node->enlarged.contains(polygon.m_box)) ) {
+            if ( !(node->enlarged.contains(polygon.get_AABB())) ) {
                 invalids.push_back(node);
             }
         } else {
@@ -129,7 +129,7 @@ void AABBTree::remove_node(std::shared_ptr<Node>& node)
 
 std::vector<Collision> AABBTree::query(CollisionBody* body) const
 {
-    const AABB query = body->get_polygon().m_box;
+    const AABB query = body->get_polygon().get_AABB();
 
     std::vector<Collision> collisions;
     std::stack<std::shared_ptr<Node>> stack;

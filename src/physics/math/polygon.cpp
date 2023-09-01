@@ -68,6 +68,16 @@ const Vector2& Polygon::get_centroid() const
     return m_centroid;
 }
 
+const AABB& Polygon::get_AABB() const
+{
+    return m_box;
+}
+
+void Polygon::set_AABB(const AABB& box)
+{
+    m_box = box;
+}
+
 Vector2 Polygon::support(Vector2 d) const
 {
     Vector2 furthest_vertex;

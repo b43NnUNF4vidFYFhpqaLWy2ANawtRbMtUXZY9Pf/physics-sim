@@ -25,7 +25,7 @@ void Node::make_leaf(CollisionBody* body)
 {
     Polygon& polygon = body->get_polygon();
     AABB box(polygon);
-    polygon.m_box = box;
+    polygon.set_AABB(box);
 
     left_child = nullptr;
     right_child = nullptr;
@@ -37,7 +37,7 @@ void Node::make_leaf(CollisionBody* body)
 void Node::refit_AABB(float margin)
 {
     if ( is_leaf() ) {
-        const AABB& tight = body->get_polygon().m_box;
+        const AABB& tight = body->get_polygon().get_AABB();
         const Vector2 margin_vec = {margin, margin};
         enlarged.min = tight.min - margin_vec;
         enlarged.max = tight.max + margin_vec;
