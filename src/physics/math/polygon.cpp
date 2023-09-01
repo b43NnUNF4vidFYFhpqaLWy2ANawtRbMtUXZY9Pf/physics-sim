@@ -9,11 +9,7 @@
 Polygon::Polygon(std::initializer_list<Vector2> vertices)
     : m_vertices(vertices),
       m_centroid(find_centroid())
-{
-    if (!is_convex()) {
-        throw std::invalid_argument("Polygon should be convex");
-    }
-}
+{}
 
 void Polygon::move(const Vector2& delta)
 {
