@@ -2,11 +2,14 @@
 
 #include "collision_detector.h"
 
-class Bruteforce : public CollisionDetector
+namespace Physics::Collision::Detection::Broadphase::Bruteforce
 {
-    void update() override;
-    void insert(CollisionBody* body) override;
-    void remove(CollisionBody* body) override;
-    std::vector<Collision> query(CollisionBody* const body) const override;
-    std::vector<Collision> get_collisions() const override;
-};
+    class Bruteforce : public Physics::Collision::Detection::CollisionDetector
+    {
+        void update() override;
+        void insert(Physics::Dynamics::CollisionBody* body) override;
+        void remove(Physics::Dynamics::CollisionBody* body) override;
+        std::vector<Physics::Collision::CollisionPair> query(Physics::Dynamics::CollisionBody* const body) const override;
+        std::vector<Physics::Collision::CollisionPair> get_collisions() const override;
+    };
+}

@@ -2,10 +2,13 @@
 
 #include "vector.h"
 
-struct Contact
+namespace Physics::Collision::Detection::Narrowphase
 {
-    float penetrationDepth;
-    Vector2 a, b;
-    Vector2 normal;
-    Vector2 tangent;
-};
+    struct Contact
+    {
+        float penetrationDepth;
+        Physics::Math::Vector2 a, b;
+        Physics::Math::Vector2 normal;
+        Physics::Math::Vector2 tangent;
+    };
+}

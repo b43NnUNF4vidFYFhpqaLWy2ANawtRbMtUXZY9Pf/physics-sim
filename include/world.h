@@ -6,31 +6,34 @@
 #include <vector>
 #include <cstddef>
 
-class World
+namespace Physics
 {
-private:
-    std::vector<CollisionBody*> m_objects;
-    std::vector<CollisionSolver*> m_solvers;
+    class World
+    {
+    private:
+        std::vector<Dynamics::CollisionBody*> m_objects;
+        std::vector<Physics::Collision::Resolution::Constraints::CollisionSolver*> m_solvers;
 
-    Vector2 m_gravity;
+        Physics::Math::Vector2 m_gravity;
 
-    void solve_collisions(float dt);
-public:
-    CollisionDetector* m_collision_detector;
+        void solve_collisions(float dt);
+    public:
+        Physics::Collision::Detection::CollisionDetector* m_collision_detector;
 
-    World() = default;
-    void set_collision_detector(CollisionDetector* collision_detector);
+        World() = default;
+        void set_collision_detector(Physics::Collision::Detection::CollisionDetector* collision_detector);
 
-    void reserve_objects(std::size_t cap);
-    void add_object(CollisionBody* object);
-    void remove_object(CollisionBody* object);
-    const std::vector<CollisionBody*>& get_objects() const;
+        void reserve_objects(std::size_t cap);
+        void add_object(Dynamics::CollisionBody* object);
+        void remove_object(Dynamics::CollisionBody* object);
+        const std::vector<Dynamics::CollisionBody*>& get_objects() const;
 
-    void reserve_solvers(std::size_t cap);
-    void add_solver(CollisionSolver* solver);
-    void remove_solver(CollisionSolver* solver);
+        void reserve_solvers(std::size_t cap);
+        void add_solver(Physics::Collision::Resolution::Constraints::CollisionSolver* solver);
+        void remove_solver(Physics::Collision::Resolution::Constraints::CollisionSolver* solver);
 
-    void set_gravity(const Vector2& gravity);
-    
-    void step(float dt);
-};
+        void set_gravity(const Physics::Math::Vector2& gravity);
+        
+        void step(float dt);
+    };
+}

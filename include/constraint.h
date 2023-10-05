@@ -1,11 +1,14 @@
 #pragma once
 
-class Constraint
+namespace Physics::Collision::Resolution::Constraints
 {
-protected:
-    float beta;
-public:
-    Constraint(float beta);
+    class Constraint
+    {
+    protected:
+        float beta;
+    public:
+        Constraint(float beta);
 
-    virtual void solve() = 0;
-};
+        virtual void solve() = 0;
+    };
+}

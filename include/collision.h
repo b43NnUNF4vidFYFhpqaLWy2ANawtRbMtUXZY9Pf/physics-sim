@@ -3,11 +3,14 @@
 #include "collision_body.h"
 #include "contact.h"
 
-struct Collision
+namespace Physics::Collision
 {
-    Collision(CollisionBody* a, CollisionBody* b, Contact contact);
+    struct CollisionPair
+    {
+        CollisionPair(Physics::Dynamics::CollisionBody* a, Physics::Dynamics::CollisionBody* b, Physics::Collision::Detection::Narrowphase::Contact contact);
 
-    CollisionBody* a;
-    CollisionBody* b;
-    Contact contact;
-};
+        Physics::Dynamics::CollisionBody* a;
+        Physics::Dynamics::CollisionBody* b;
+        Physics::Collision::Detection::Narrowphase::Contact contact;
+    };
+}

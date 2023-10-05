@@ -1,45 +1,48 @@
 #include "simplex.h"
 
-CSOSupport::CSOSupport() {}
-
-CSOSupport::CSOSupport(const Polygon& poly_a, const Polygon& poly_b, Vector2 d)
+namespace Physics::Collision::Detection::Narrowphase
 {
-    a = poly_a.support(d);
-    b = poly_b.support(-1*d);
-    c = a - b;
-}
+    CSOSupport::CSOSupport() {}
 
-Simplex2::Simplex2()
-    : m_size(0),
-      m_contains_origin(false)
-{
-}
-
-Simplex2& Simplex2::operator=(std::initializer_list<CSOSupport> points)
-{
-    for (const CSOSupport* point = points.begin(); point != points.end(); point++) {
-        m_points[std::distance(points.begin(), point)] = *point;
+    CSOSupport::CSOSupport(const Physics::Math::Polygon& poly_a, const Physics::Math::Polygon& poly_b, Physics::Math::Vector2 d)
+    {
+        a = poly_a.support(d);
+        b = poly_b.support(-1*d);
+        c = a - b;
     }
-    m_size = points.size();
 
-    return *this;
-}
+    Simplex2::Simplex2()
+        : m_size(0),
+          m_contains_origin(false)
+    {
+    }
 
-void Simplex2::push_front(CSOSupport point)
-{
-    m_points = {point, m_points[0], m_points[1]};
-    if (m_size < 3) m_size++;
-}
+    Simplex2& Simplex2::operator=(std::initializer_list<CSOSupport> points)
+    {
+        for (const CSOSupport* point = points.begin(); point != points.end(); point++) {
+            m_points[std::distance(points.begin(), point)] = *point;
+        }
+        m_size = points.size();
 
-CSOSupport& Simplex2::operator[](unsigned i) { return m_points[i]; }
-unsigned Simplex2::size() const {return m_size; }
+        return *this;
+    }
 
-void Simplex2::set_contains_origin()
-{
-    m_contains_origin = true;
-}
+    void Simplex2::push_front(CSOSupport point)
+    {
+        m_points = {point, m_points[0], m_points[1]};
+        if (m_size < 3) m_size++;
+    }
 
-bool Simplex2::contains_origin() const
-{
-    return m_contains_origin;
+    CSOSupport& Simplex2::operator[](unsigned i) { return m_points[i]; }
+    unsigned Simplex2::size() const {return m_size; }
+
+    void Simplex2::set_contains_origin()
+    {
+        m_contains_origin = true;
+    }
+
+    bool Simplex2::contains_origin() const
+    {
+        return m_contains_origin;
+    }
 }

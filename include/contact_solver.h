@@ -2,12 +2,15 @@
 
 #include "collision_solver.h"
 
-class ContactConstraintSolver : public CollisionSolver
+namespace Physics::Collision::Resolution::Constraints
 {
-private:
-    unsigned m_iterations;
-    float beta;
-public:
-    ContactConstraintSolver(unsigned iterations, float beta);
-    void solve(std::vector<Collision>& collisions, float dt) override;
-};
+    class ContactConstraintSolver : public CollisionSolver
+    {
+    private:
+        unsigned m_iterations;
+        float beta;
+    public:
+        ContactConstraintSolver(unsigned iterations, float beta);
+        void solve(std::vector<Physics::Collision::CollisionPair>& collisions, float dt) override;
+    };
+}

@@ -3,21 +3,24 @@
 #include "constraint.h"
 #include "rigid_body.h"
 
-class PlaneConstraint : public Constraint
+namespace Physics::Collision::Resolution::Constraints
 {
-private:
-    RigidBody* rigid_body;
-    const Vector2 r;
-    const Vector2& n, t;
-    float d;
+    class PlaneConstraint : public Constraint
+    {
+    private:
+        Physics::Dynamics::RigidBody* rigid_body;
+        const Physics::Math::Vector2 r;
+        const Physics::Math::Vector2& n, t;
+        float d;
 
-    float inv_mass, inv_inertia, c_f;
-    Vector2 tau_norm, tau_tan;
-    float m_eff, m_eff_t;
-    float b;
-    
-    float m_total_lambda, m_total_lambda_t;
-public:
-    PlaneConstraint(RigidBody* rigid_body, const Vector2& p, const Vector2& n, const Vector2& t, float d, float beta);
-    void solve() override;
-};
+        float inv_mass, inv_inertia, c_f;
+        Physics::Math::Vector2 tau_norm, tau_tan;
+        float m_eff, m_eff_t;
+        float b;
+        
+        float m_total_lambda, m_total_lambda_t;
+    public:
+        PlaneConstraint(Physics::Dynamics::RigidBody* rigid_body, const Physics::Math::Vector2& p, const Physics::Math::Vector2& n, const Physics::Math::Vector2& t, float d, float beta);
+        void solve() override;
+    };
+}
