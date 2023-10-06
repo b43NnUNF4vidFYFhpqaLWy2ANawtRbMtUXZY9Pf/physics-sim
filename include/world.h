@@ -11,7 +11,7 @@ namespace Physics
     class World
     {
     private:
-        std::vector<Dynamics::CollisionBody*> m_objects;
+        std::vector<Physics::Dynamics::CollisionBody*> m_objects;
         std::vector<Physics::Collision::Resolution::Constraints::CollisionSolver*> m_solvers;
 
         Physics::Math::Vector2 m_gravity;
@@ -24,9 +24,9 @@ namespace Physics
         void set_collision_detector(Physics::Collision::Detection::CollisionDetector* collision_detector);
 
         void reserve_objects(std::size_t cap);
-        void add_object(Dynamics::CollisionBody* object);
-        void remove_object(Dynamics::CollisionBody* object);
-        const std::vector<Dynamics::CollisionBody*>& get_objects() const;
+        void add_object(Physics::Dynamics::CollisionBody* object);
+        void remove_object(Physics::Dynamics::CollisionBody* object);
+        const std::vector<Physics::Dynamics::CollisionBody*>& get_objects() const;
 
         void reserve_solvers(std::size_t cap);
         void add_solver(Physics::Collision::Resolution::Constraints::CollisionSolver* solver);
