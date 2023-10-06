@@ -9,21 +9,13 @@
 #include "contact_solver.h"
 #include "plane_solver.h"
 
+#include <vector>
+
 constexpr int SCREEN_WIDTH = 1280;
 constexpr int SCREEN_HEIGHT = 720;
 
 int main()
 {
-    Physics::Math::Polygon a({ {500, 400}, {500, 500}, {600, 500}, {600, 400} });
-    Physics::Dynamics::RigidBody a_body(a, 500, 0.1, 0.5);
-    a_body.add_angVel(3.14);
-    
-    Physics::Math::Polygon b({ {575, 200}, {575, 300}, {675, 300}, {675, 200} });
-    Physics::Dynamics::RigidBody b_body(b, 500, 0.1, 0.5);
-    
-    Physics::Math::Polygon ground_poly( { {100, 100}, {100, 200}, {550, 200}, {950, 150}, {1200, 100} } );
-    Physics::Dynamics::CollisionBody ground(ground_poly);
-
     Physics::World world;
     Physics::Collision::Detection::Broadphase::BVH::AABBTree collision_detector(0.2);
     world.set_collision_detector(&collision_detector);
@@ -31,17 +23,91 @@ int main()
     Physics::Math::Vector2 gravity(0.0, -10*9.82);
     world.set_gravity(gravity);
 
-    world.add_object(&a_body);
-    world.add_object(&b_body);
-    world.add_object(&ground);
-    
     Physics::Collision::Resolution::Constraints::PlaneConstraintSolver plane_solver(6, 0.8);
     world.add_solver(&plane_solver);
     Physics::Collision::Resolution::Constraints::ContactConstraintSolver contact_solver(6, 0.2);
     world.add_solver(&contact_solver);
 
+    const int square_size = 10;
+    const int columns = 50;
+    const int rows = 5;
+    const int column_interval = SCREEN_WIDTH/columns;
+    const int row_interval = column_interval;
+    const int row_height = rows*row_interval;
+    
+    const float square_mass = 100;
+    const float square_restitution = 0.2;
+    const float square_friction = 0.1;
+
+    std::vector<Physics::Dynamics::RigidBody*> squares; // To free after use
+    squares.reserve(columns*rows);
+
+    world.reserve_objects(columns*rows);
+    for (int i = 0; i < SCREEN_WIDTH; i += column_interval) {
+        for (int j = 0; j < row_height; j += row_interval) {
+            Physics::Math::Polygon poly({
+                    {
+                        i,
+                        SCREEN_HEIGHT - j - square_size
+                    },
+                    {
+                        i,
+                        SCREEN_HEIGHT - j
+                    },
+                    {
+                        i + square_size,
+                        SCREEN_HEIGHT - j
+                    },
+                    {
+                        i + square_size,
+                        SCREEN_HEIGHT - j - square_size
+                    }
+                });
+            Physics::Dynamics::RigidBody* body = new Physics::Dynamics::RigidBody(poly, square_mass, square_restitution, square_friction); // Can't use smart pointers without extra code, as the physics library takes raw pointers only
+            world.add_object(body);
+            
+            squares.push_back(body);
+        }
+    }
+    
+    Physics::Math::Polygon left({
+        {50, 360},
+        {50, 385},
+        {640, 385},
+        {640, 360}
+    });
+    left.rotate(-0.785);
+    Physics::Dynamics::CollisionBody left_body(left);
+    world.add_object(&left_body);
+    
+    Physics::Math::Polygon right({
+        {640, 360},
+        {640, 385},
+        {1230, 385},
+        {1230, 360}
+    });
+    right.rotate(0.785);
+    Physics::Dynamics::CollisionBody right_body(right);
+    world.add_object(&right_body);
+
+    Physics::Math::Polygon ground_poly( { {50, 25}, {50, 50}, {1230, 50}, {1230, 25} } );
+    Physics::Dynamics::CollisionBody ground(ground_poly);
+    world.add_object(&ground);
+    
+/*     Physics::Math::Polygon triangle({
+        {440, 1000},
+        {840, 1000},
+        {640, 720}
+    });
+    Physics::Dynamics::RigidBody triangle_body(triangle, 10000, 0.5, 0.5);
+    world.add_object(&triangle_body); */
+
     Engine::Window window(SCREEN_WIDTH, SCREEN_HEIGHT);
     window.loop(world);
+    
+    for (Physics::Dynamics::RigidBody* square : squares) {
+        delete square;
+    }
     
     return EXIT_SUCCESS;
 }
