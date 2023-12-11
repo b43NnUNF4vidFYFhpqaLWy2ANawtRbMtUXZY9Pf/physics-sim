@@ -4,12 +4,13 @@
 #include "collision_body.h"
 #include "rigid_body.h"
 #include "bvh.h"
-#include "bruteforce.h"
 #include "world.h"
 #include "contact_solver.h"
 #include "plane_solver.h"
 
 #include <vector>
+#include <memory>
+#include <utility>
 
 constexpr int SCREEN_WIDTH = 1280;
 constexpr int SCREEN_HEIGHT = 720;
@@ -39,10 +40,10 @@ int main()
     const float square_restitution = 0.2;
     const float square_friction = 0.1;
 
-    std::vector<Physics::Dynamics::RigidBody*> squares; // To free after use
+    std::vector<std::unique_ptr<Physics::Dynamics::RigidBody>> squares; // Physics engine itself does not take care of memory management
     squares.reserve(columns*rows);
-
     world.reserve_objects(columns*rows);
+
     for (int i = 0; i < SCREEN_WIDTH; i += column_interval) {
         for (int j = 0; j < row_height; j += row_interval) {
             Physics::Math::Polygon poly({
@@ -63,10 +64,10 @@ int main()
                         SCREEN_HEIGHT - j - square_size
                     }
                 });
-            Physics::Dynamics::RigidBody* body = new Physics::Dynamics::RigidBody(poly, square_mass, square_restitution, square_friction); // Can't use smart pointers without extra code, as the physics library takes raw pointers only
-            world.add_object(body);
+            std::unique_ptr<Physics::Dynamics::RigidBody> body = std::make_unique<Physics::Dynamics::RigidBody>(Physics::Dynamics::RigidBody(poly, square_mass, square_restitution, square_friction));
+            world.add_object(body.get());
             
-            squares.push_back(body);
+            squares.push_back(std::move(body));
         }
     }
     
@@ -94,20 +95,8 @@ int main()
     Physics::Dynamics::CollisionBody ground(ground_poly);
     world.add_object(&ground);
     
-/*     Physics::Math::Polygon triangle({
-        {440, 1000},
-        {840, 1000},
-        {640, 720}
-    });
-    Physics::Dynamics::RigidBody triangle_body(triangle, 10000, 0.5, 0.5);
-    world.add_object(&triangle_body); */
-
     Engine::Window window(SCREEN_WIDTH, SCREEN_HEIGHT);
     window.loop(world);
-    
-    for (Physics::Dynamics::RigidBody* square : squares) {
-        delete square;
-    }
     
     return EXIT_SUCCESS;
 }
