@@ -48,20 +48,20 @@ int main()
         for (int j = 0; j < row_height; j += row_interval) {
             Physics::Polygon poly({
                     {
-                        i,
-                        SCREEN_HEIGHT - j - square_size
+                        static_cast<float>(i),
+                        static_cast<float>(SCREEN_HEIGHT - j - square_size)
                     },
                     {
-                        i,
-                        SCREEN_HEIGHT - j
+                        static_cast<float>(i),
+                        static_cast<float>(SCREEN_HEIGHT - j)
                     },
                     {
-                        i + square_size,
-                        SCREEN_HEIGHT - j
+                        static_cast<float>(i + square_size),
+                        static_cast<float>(SCREEN_HEIGHT - j)
                     },
                     {
-                        i + square_size,
-                        SCREEN_HEIGHT - j - square_size
+                        static_cast<float>(i + square_size),
+                        static_cast<float>(SCREEN_HEIGHT - j - square_size)
                     }
                 });
             std::unique_ptr<Physics::RigidBody> body = std::make_unique<Physics::RigidBody>(Physics::RigidBody(poly, square_mass, square_restitution, square_friction));
