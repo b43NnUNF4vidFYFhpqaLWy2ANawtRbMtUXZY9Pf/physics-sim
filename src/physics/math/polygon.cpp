@@ -6,7 +6,7 @@
 #include <cstddef>
 #include <limits>
 
-namespace Physics::Math
+namespace Physics
 {
     Polygon::Polygon(std::initializer_list<Vector2> vertices)
         : m_vertices(vertices),
@@ -66,7 +66,7 @@ namespace Physics::Math
 
     void Polygon::update_AABB()
     {
-        m_box = Physics::Collision::Detection::Broadphase::BVH::AABB(*this);
+        m_box = AABB(*this);
     }
 
     const Vector2& Polygon::get_centroid() const
@@ -74,12 +74,12 @@ namespace Physics::Math
         return m_centroid;
     }
 
-    const Physics::Collision::Detection::Broadphase::BVH::AABB &Polygon::get_AABB() const
+    const AABB &Polygon::get_AABB() const
     {
         return m_box;
     }
 
-    void Polygon::set_AABB(const Physics::Collision::Detection::Broadphase::BVH::AABB &box)
+    void Polygon::set_AABB(const AABB& box)
     {
         m_box = box;
     }

@@ -1,8 +1,8 @@
 #include "collision_detector.h"
 
-namespace Physics::Collision::Detection
+namespace Physics
 {
-    void CollisionDetector::set_objects(std::vector<Physics::Dynamics::CollisionBody*>* objects)
+    void CollisionDetector::set_objects(std::vector<CollisionBody*>* objects)
     {
         m_objects = objects;
     }

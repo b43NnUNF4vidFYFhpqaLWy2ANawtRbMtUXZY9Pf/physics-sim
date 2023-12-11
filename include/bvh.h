@@ -4,9 +4,9 @@
 #include "node.h"
 #include "collision_body.h"
 
-namespace Physics::Collision::Detection::Broadphase::BVH
+namespace Physics
 {
-    class AABBTree : public Physics::Collision::Detection::CollisionDetector
+    class AABBTree : public CollisionDetector
     {
     private:
         std::shared_ptr<Node> m_root;
@@ -19,9 +19,9 @@ namespace Physics::Collision::Detection::Broadphase::BVH
         AABBTree(float margin);
         
         void update() override;
-        void insert(Physics::Dynamics::CollisionBody* body) override;
-        void remove(Physics::Dynamics::CollisionBody* body) override;
-        std::vector<Physics::Collision::CollisionPair> query(Physics::Dynamics::CollisionBody* const body) const override;
-        std::vector<Physics::Collision::CollisionPair> get_collisions() const override;
+        void insert(CollisionBody* body) override;
+        void remove(CollisionBody* body) override;
+        std::vector<CollisionPair> query(CollisionBody* const body) const override;
+        std::vector<CollisionPair> get_collisions() const override;
     };
 }

@@ -1,7 +1,7 @@
 #include "vector.h"
 #include <cmath>
 
-namespace Physics::Math
+namespace Physics
 {
     Vector2::Vector2() : x(0.0f), y(0.0f), z(0.0f) {}
 

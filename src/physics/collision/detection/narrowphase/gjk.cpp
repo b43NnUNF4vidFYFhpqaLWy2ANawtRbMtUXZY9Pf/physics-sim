@@ -1,13 +1,13 @@
 #include "gjk.h"
 
-namespace Physics::Collision::Detection::Narrowphase
+namespace Physics
 {
-    Simplex2 GJK(const Physics::Math::Polygon& a, const Physics::Math::Polygon& b)
+    Simplex2 GJK(const Polygon& a, const Polygon& b)
     {
         CSOSupport support(a, b, {1, 0});
         Simplex2 supports;
         supports.push_front(support);
-        Physics::Math::Vector2 direction = -1*support.c;
+        Vector2 direction = -1*support.c;
         
         while (true) {
             support = CSOSupport(a, b, direction);
@@ -25,7 +25,7 @@ namespace Physics::Collision::Detection::Narrowphase
         }
     }
 
-    bool update_simplex(Simplex2& supports, Physics::Math::Vector2& direction)
+    bool update_simplex(Simplex2& supports, Vector2& direction)
     {
         switch ( supports.size() ) {
             case 2: return line_case(supports, direction);
@@ -35,17 +35,17 @@ namespace Physics::Collision::Detection::Narrowphase
         return false; // Error
     }
 
-    bool line_case(Simplex2& supports, Physics::Math::Vector2& direction)
+    bool line_case(Simplex2& supports, Vector2& direction)
     {
 
         CSOSupport A = supports[0];
         CSOSupport B = supports[1];
 
-        Physics::Math::Vector2 a = A.c;
-        Physics::Math::Vector2 b = B.c;
+        Vector2 a = A.c;
+        Vector2 b = B.c;
         
-        Physics::Math::Vector2 ab = b - a;
-        Physics::Math::Vector2 ao = -1*a;
+        Vector2 ab = b - a;
+        Vector2 ao = -1*a;
         
         if (ab.dot(ao) > 0) {
             direction = ab.cross(ao).cross(ab);
@@ -58,20 +58,20 @@ namespace Physics::Collision::Detection::Narrowphase
     }
 
 
-    bool triangle_case(Simplex2& supports, Physics::Math::Vector2& direction)
+    bool triangle_case(Simplex2& supports, Vector2& direction)
     {
         CSOSupport A = supports[0];
         CSOSupport B = supports[1];
         CSOSupport C = supports[2];
 
-        Physics::Math::Vector2 a = A.c;
-        Physics::Math::Vector2 b = B.c;
-        Physics::Math::Vector2 c = C.c;
+        Vector2 a = A.c;
+        Vector2 b = B.c;
+        Vector2 c = C.c;
 
-        Physics::Math::Vector2 ab = b - a;
-        Physics::Math::Vector2 ac = c - a;
-        Physics::Math::Vector2 ao = -1*a;
-        Physics::Math::Vector2 abc = ab.cross(ac);
+        Vector2 ab = b - a;
+        Vector2 ac = c - a;
+        Vector2 ao = -1*a;
+        Vector2 abc = ab.cross(ac);
         
         if (abc.cross(ac).dot(ao) > 0) {
             if (ac.dot(ao) > 0) {

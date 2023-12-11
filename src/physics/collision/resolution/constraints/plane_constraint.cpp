@@ -1,9 +1,9 @@
 #include "plane_constraint.h"
 #include <algorithm>
 
-namespace Physics::Collision::Resolution::Constraints
+namespace Physics
 {
-    PlaneConstraint::PlaneConstraint(Physics::Dynamics::RigidBody* rigid_body, const Physics::Math::Vector2& p, const Physics::Math::Vector2& n, const Physics::Math::Vector2& t, float d, float beta)
+    PlaneConstraint::PlaneConstraint(RigidBody* rigid_body, const Vector2& p, const Vector2& n, const Vector2& t, float d, float beta)
         : Constraint(beta),
           rigid_body(rigid_body),
           r(p - rigid_body->get_polygon().get_centroid()),
@@ -26,9 +26,9 @@ namespace Physics::Collision::Resolution::Constraints
 
     void PlaneConstraint::solve()
     {
-        Physics::Math::Vector2 v = rigid_body->get_vel();
-        Physics::Math::Vector2 omega = {0, 0, rigid_body->get_angVel()};
-        Physics::Math::Vector2 C_t = v + omega.cross(r);
+        Vector2 v = rigid_body->get_vel();
+        Vector2 omega = {0, 0, rigid_body->get_angVel()};
+        Vector2 C_t = v + omega.cross(r);
 
         float lambda = -m_eff*(C_t.dot(n) + b);
         float old_total_lambda = m_total_lambda;

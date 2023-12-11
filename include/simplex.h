@@ -5,14 +5,14 @@
 #include <array>
 #include <initializer_list>
 
-namespace Physics::Collision::Detection::Narrowphase
+namespace Physics
 {
     struct CSOSupport
     {
-        Physics::Math::Vector2 a, b, c;
+        Vector2 a, b, c;
         
         CSOSupport();
-        CSOSupport(const Physics::Math::Polygon& a, const Physics::Math::Polygon& b, Physics::Math::Vector2 d);
+        CSOSupport(const Polygon& a, const Polygon& b, Vector2 d);
     };
 
     struct Simplex2

@@ -3,22 +3,19 @@
 #include "polygon.h"
 #include <memory>
 
-namespace Physics::Collision::Detection::Broadphase::BVH
+namespace Physics
 {
     struct Node;
-}
 
-namespace Physics::Dynamics
-{
     class CollisionBody
     {
     protected:
-        Physics::Math::Polygon m_polygon;
+        Polygon m_polygon;
     public:
-        std::shared_ptr<Physics::Collision::Detection::Broadphase::BVH::Node> m_node;
+        std::shared_ptr<Node> m_node;
 
-        CollisionBody(Physics::Math::Polygon polygon);
+        CollisionBody(Polygon polygon);
         virtual ~CollisionBody() = default; // Neccessary for dynamic_cast
-        Physics::Math::Polygon& get_polygon();
+        Polygon& get_polygon();
     };
 }

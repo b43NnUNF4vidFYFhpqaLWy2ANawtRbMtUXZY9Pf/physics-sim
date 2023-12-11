@@ -3,11 +3,11 @@
 #include "collision.h"
 #include <vector>
 
-namespace Physics::Collision::Resolution::Constraints
+namespace Physics
 {
     class CollisionSolver
     {
     public:
-        virtual void solve(std::vector<Physics::Collision::CollisionPair>& collisions, float dt) = 0;
+        virtual void solve(std::vector<CollisionPair>& collisions, float dt) = 0;
     };
 }

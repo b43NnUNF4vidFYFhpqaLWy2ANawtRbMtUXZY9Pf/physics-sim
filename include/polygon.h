@@ -5,14 +5,14 @@
 #include <vector>
 #include <initializer_list>
 
-namespace Physics::Math
+namespace Physics
 {
     class Polygon
     {
     private:
         std::vector<Vector2> m_vertices;
         Vector2 m_centroid;
-        Physics::Collision::Detection::Broadphase::BVH::AABB m_box;
+        AABB m_box;
 
         Vector2 find_centroid() const;
     public:
@@ -26,8 +26,8 @@ namespace Physics::Math
         const Vector2& get_centroid() const;
 
         void update_AABB();
-        const Physics::Collision::Detection::Broadphase::BVH::AABB& get_AABB() const;
-        void set_AABB(const Physics::Collision::Detection::Broadphase::BVH::AABB& box);
+        const AABB& get_AABB() const;
+        void set_AABB(const AABB& box);
 
         Vector2 support(Vector2 d) const;
     };

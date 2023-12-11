@@ -1,6 +1,6 @@
 #pragma once
 
-namespace Physics::Collision::Resolution::Constraints
+namespace Physics
 {
     class Constraint
     {

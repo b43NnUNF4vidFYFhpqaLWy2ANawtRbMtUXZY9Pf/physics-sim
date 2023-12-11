@@ -1,10 +1,10 @@
 #include "simplex.h"
 
-namespace Physics::Collision::Detection::Narrowphase
+namespace Physics
 {
     CSOSupport::CSOSupport() {}
 
-    CSOSupport::CSOSupport(const Physics::Math::Polygon& poly_a, const Physics::Math::Polygon& poly_b, Physics::Math::Vector2 d)
+    CSOSupport::CSOSupport(const Polygon& poly_a, const Polygon& poly_b, Vector2 d)
     {
         a = poly_a.support(d);
         b = poly_b.support(-1*d);

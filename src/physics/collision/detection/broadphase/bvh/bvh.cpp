@@ -3,7 +3,7 @@
 #include "epa.h"
 #include <stack>
 
-namespace Physics::Collision::Detection::Broadphase::BVH
+namespace Physics
 {
     AABBTree::AABBTree(float margin)
         : m_margin(margin)
@@ -46,7 +46,7 @@ namespace Physics::Collision::Detection::Broadphase::BVH
             stack.pop();
 
             if ( node->is_leaf() ) {
-                Physics::Math::Polygon& polygon = node->body->get_polygon();
+                Polygon& polygon = node->body->get_polygon();
                 polygon.update_AABB();
 
                 if ( !(node->enlarged.contains(polygon.get_AABB())) ) {
@@ -61,7 +61,7 @@ namespace Physics::Collision::Detection::Broadphase::BVH
         return invalids;
     }
 
-    void AABBTree::insert(Physics::Dynamics::CollisionBody* body)
+    void AABBTree::insert(CollisionBody* body)
     {
         if (m_root) {
             std::shared_ptr<Node> node = std::make_shared<Node>();
@@ -99,7 +99,7 @@ namespace Physics::Collision::Detection::Broadphase::BVH
         parent->refit_AABB(m_margin);
     }
 
-    void AABBTree::remove(Physics::Dynamics::CollisionBody* body)
+    void AABBTree::remove(CollisionBody* body)
     {
         std::shared_ptr<Node>& node = body->m_node;
         
@@ -129,11 +129,11 @@ namespace Physics::Collision::Detection::Broadphase::BVH
         }
     }
 
-    std::vector<Physics::Collision::CollisionPair> AABBTree::query(Physics::Dynamics::CollisionBody* body) const
+    std::vector<CollisionPair> AABBTree::query(CollisionBody* body) const
     {
         const AABB query = body->get_polygon().get_AABB();
 
-        std::vector<Physics::Collision::CollisionPair> collisions;
+        std::vector<CollisionPair> collisions;
         std::stack<std::shared_ptr<Node>> stack;
         
         stack.push(m_root);
@@ -143,10 +143,10 @@ namespace Physics::Collision::Detection::Broadphase::BVH
             
             if (node->enlarged.collides(query)) {
                 if (node->is_leaf() && node->body != body) {
-                    Physics::Collision::Detection::Narrowphase::Simplex2 simplex = Physics::Collision::Detection::Narrowphase::GJK(body->get_polygon(), node->body->get_polygon());
+                    Simplex2 simplex = GJK(body->get_polygon(), node->body->get_polygon());
                     
                     if (simplex.contains_origin() ) {
-                        Physics::Collision::Detection::Narrowphase::Contact contact = Physics::Collision::Detection::Narrowphase::EPA(simplex, body->get_polygon(), node->body->get_polygon());
+                        Contact contact = EPA(simplex, body->get_polygon(), node->body->get_polygon());
                         collisions.emplace_back(body, node->body, contact);
                     }
                 } else {
@@ -159,12 +159,12 @@ namespace Physics::Collision::Detection::Broadphase::BVH
         return collisions;
     }
 
-    std::vector<Physics::Collision::CollisionPair> AABBTree::get_collisions() const
+    std::vector<CollisionPair> AABBTree::get_collisions() const
     {
-        std::vector<Physics::Collision::CollisionPair> collisions;
+        std::vector<CollisionPair> collisions;
         
-        for (Physics::Dynamics::CollisionBody* const body : *m_objects) {
-            std::vector<Physics::Collision::CollisionPair> target_collisions = query(body);
+        for (CollisionBody* const body : *m_objects) {
+            std::vector<CollisionPair> target_collisions = query(body);
             collisions.reserve(collisions.size() + target_collisions.size());
             collisions.insert(collisions.end(), target_collisions.begin(), target_collisions.end());
         }

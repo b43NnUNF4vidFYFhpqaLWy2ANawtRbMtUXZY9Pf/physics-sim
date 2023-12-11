@@ -1,6 +1,6 @@
 #include "constraint.h"
 
-namespace Physics::Collision::Resolution::Constraints
+namespace Physics
 {
     Constraint::Constraint(float beta)
         : beta(beta)

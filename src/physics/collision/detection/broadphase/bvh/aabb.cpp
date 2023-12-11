@@ -3,9 +3,9 @@
 #include <limits>
 #include <algorithm>
 
-namespace Physics::Collision::Detection::Broadphase::BVH
+namespace Physics
 {
-    AABB::AABB(Physics::Math::Polygon& polygon)
+    AABB::AABB(Polygon& polygon)
     {
         const float inf = std::numeric_limits<float>::infinity();
 
@@ -14,7 +14,7 @@ namespace Physics::Collision::Detection::Broadphase::BVH
         float max_x = -inf;
         float max_y = -inf;
 
-        for (const Physics::Math::Vector2& v : polygon.get_vertices()) {
+        for (const Vector2& v : polygon.get_vertices()) {
             if (v.x < min_x) {
                 min_x = v.x;
             }
@@ -59,7 +59,7 @@ namespace Physics::Collision::Detection::Broadphase::BVH
 
     float AABB::area() const
     {
-        Physics::Math::Vector2 d = max - min;
+        Vector2 d = max - min;
         
         return d.x*d.y;
     }

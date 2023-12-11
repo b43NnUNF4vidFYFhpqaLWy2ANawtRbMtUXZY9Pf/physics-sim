@@ -3,9 +3,9 @@
 #include <cstddef>
 #include <cmath>
 
-namespace Physics::Dynamics
+namespace Physics
 {
-    RigidBody::RigidBody(Physics::Math::Polygon polygon, float mass, float restitution, float friction)
+    RigidBody::RigidBody(Polygon polygon, float mass, float restitution, float friction)
         : CollisionBody(polygon),
           m_mass(mass),
           m_restitution(restitution),
@@ -17,7 +17,7 @@ namespace Physics::Dynamics
         calc_moment_of_inertia();
     }
 
-    Physics::Math::Vector2 RigidBody::get_vel() const
+    Vector2 RigidBody::get_vel() const
     {
         return m_vel;
     }
@@ -52,7 +52,7 @@ namespace Physics::Dynamics
         return m_friction;
     }
 
-    void RigidBody::add_vel(const Physics::Math::Vector2& v)
+    void RigidBody::add_vel(const Vector2& v)
     {
         m_vel += v;
     }
@@ -61,11 +61,11 @@ namespace Physics::Dynamics
         m_angularVelocity += a;
     }
 
-    void RigidBody::apply_force(const Physics::Math::Vector2& f, const Physics::Math::Vector2& p)
+    void RigidBody::apply_force(const Vector2& f, const Vector2& p)
     {
         m_force += f;
         
-        Physics::Math::Vector2 r = p - m_polygon.get_centroid();
+        Vector2 r = p - m_polygon.get_centroid();
         m_torque += r.cross(f).z;
     }
 
@@ -88,17 +88,17 @@ namespace Physics::Dynamics
     {
         // https://stackoverflow.com/a/58983642
         float area = 0.0f;
-        Physics::Math::Vector2 center(0.0f, 0.0f, 0.0f);
+        Vector2 center(0.0f, 0.0f, 0.0f);
 
-        std::vector<Physics::Math::Vector2> vertices = m_polygon.get_vertices();
+        std::vector<Vector2> vertices = m_polygon.get_vertices();
         std::size_t n = vertices.size();
         std::size_t prev = n-1;
 
-        Physics::Math::Vector2 centroid = m_polygon.get_centroid();
-        Physics::Math::Vector2 a;
-        Physics::Math::Vector2 b;
+        Vector2 centroid = m_polygon.get_centroid();
+        Vector2 a;
+        Vector2 b;
         float area_tri;
-        Physics::Math::Vector2 center_tri;
+        Vector2 center_tri;
         float inertia_tri;
 
         for (std::size_t i = 0; i < n; i++) {

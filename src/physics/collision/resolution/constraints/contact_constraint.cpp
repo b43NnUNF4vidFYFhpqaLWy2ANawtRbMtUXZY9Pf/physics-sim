@@ -1,9 +1,9 @@
 #include "contact_constraint.h"
 #include <algorithm>
 
-namespace Physics::Collision::Resolution::Constraints
+namespace Physics
 {
-  ContactConstraint::ContactConstraint(Physics::Dynamics::RigidBody* A, Physics::Dynamics::RigidBody* B, Physics::Collision::Detection::Narrowphase::Contact& contact, float beta, float dt) 
+  ContactConstraint::ContactConstraint(RigidBody* A, RigidBody* B, Contact& contact, float beta, float dt) 
       : Constraint(beta),
         A(A),
         B(B),
@@ -43,10 +43,10 @@ namespace Physics::Collision::Resolution::Constraints
 
   void ContactConstraint::solve()
   {
-      Physics::Math::Vector2 a_vel = A->get_vel();
-      Physics::Math::Vector2 a_angVel = {0, 0, A->get_angVel()};
-      Physics::Math::Vector2 b_vel = B->get_vel();
-      Physics::Math::Vector2 b_angVel = {0, 0, B->get_angVel()};
+      Vector2 a_vel = A->get_vel();
+      Vector2 a_angVel = {0, 0, A->get_angVel()};
+      Vector2 b_vel = B->get_vel();
+      Vector2 b_angVel = {0, 0, B->get_angVel()};
 
       float jv =
           j_va.dot(a_vel)
@@ -54,7 +54,7 @@ namespace Physics::Collision::Resolution::Constraints
         + j_vb.dot(b_vel)
         + j_wb.dot(b_angVel);
 
-      Physics::Math::Vector2 relative_vel =
+      Vector2 relative_vel =
         -1*a_vel
         - a_angVel.cross(r_a)
         + b_vel

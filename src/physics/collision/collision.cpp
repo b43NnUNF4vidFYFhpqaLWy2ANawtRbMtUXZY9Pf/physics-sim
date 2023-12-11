@@ -1,9 +1,9 @@
 #include "collision.h"
 
 
-namespace Physics::Collision
+namespace Physics
 {
-  CollisionPair::CollisionPair(Physics::Dynamics::CollisionBody* a, Physics::Dynamics::CollisionBody* b, Physics::Collision::Detection::Narrowphase::Contact contact)
+  CollisionPair::CollisionPair(CollisionBody* a, CollisionBody* b, Contact contact)
       : a(a),
         b(b),
         contact(contact)

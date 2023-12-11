@@ -1,6 +1,6 @@
 #include "node.h"
 
-namespace Physics::Collision::Detection::Broadphase::BVH
+namespace Physics
 {
     Node::Node()
         : parent(nullptr),
@@ -23,9 +23,9 @@ namespace Physics::Collision::Detection::Broadphase::BVH
         right_child = b;
     }
 
-    void Node::make_leaf(Physics::Dynamics::CollisionBody* body)
+    void Node::make_leaf(CollisionBody* body)
     {
-        Physics::Math::Polygon& polygon = body->get_polygon();
+        Polygon& polygon = body->get_polygon();
         AABB box(polygon);
         polygon.set_AABB(box);
 
@@ -40,7 +40,7 @@ namespace Physics::Collision::Detection::Broadphase::BVH
     {
         if ( is_leaf() ) {
             const AABB& tight = body->get_polygon().get_AABB();
-            const Physics::Math::Vector2 margin_vec = {margin, margin};
+            const Vector2 margin_vec = {margin, margin};
             enlarged.min = tight.min - margin_vec;
             enlarged.max = tight.max + margin_vec;
         } else {

@@ -3,7 +3,7 @@
 #include "contact.h"
 #include "simplex.h"
 
-namespace Physics::Collision::Detection::Narrowphase
+namespace Physics
 {
-    Physics::Collision::Detection::Narrowphase::Contact EPA(Simplex2& simplex, const Physics::Math::Polygon& a, const Physics::Math::Polygon& b);
+    Contact EPA(Simplex2& simplex, const Polygon& a, const Polygon& b);
 }

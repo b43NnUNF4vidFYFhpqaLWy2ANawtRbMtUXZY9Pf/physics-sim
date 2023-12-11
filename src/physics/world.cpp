@@ -6,7 +6,7 @@
 
 namespace Physics
 {
-    void World::set_collision_detector(Physics::Collision::Detection::CollisionDetector* collision_detector)
+    void World::set_collision_detector(CollisionDetector* collision_detector)
     {
         m_collision_detector = collision_detector;
         m_collision_detector->set_objects(&m_objects);
@@ -17,13 +17,13 @@ namespace Physics
         m_objects.reserve(cap);
     }
 
-    void World::add_object(Physics::Dynamics::CollisionBody* object)
+    void World::add_object(CollisionBody* object)
     {
         m_objects.push_back(object);
         m_collision_detector->insert(object);
     }
 
-    void World::remove_object(Physics::Dynamics::CollisionBody* object)
+    void World::remove_object(CollisionBody* object)
     {
         if (!object) return;
         
@@ -34,7 +34,7 @@ namespace Physics
         m_objects.erase(itr);
     }
 
-    const std::vector<Physics::Dynamics::CollisionBody*>& World::get_objects() const
+    const std::vector<CollisionBody*>& World::get_objects() const
     {
         return m_objects;
     }
@@ -44,12 +44,12 @@ namespace Physics
         m_solvers.reserve(cap);
     }
 
-    void World::add_solver(Physics::Collision::Resolution::Constraints::CollisionSolver* solver)
+    void World::add_solver(CollisionSolver* solver)
     {
         m_solvers.push_back(solver);
     }
 
-    void World::remove_solver(Physics::Collision::Resolution::Constraints::CollisionSolver* solver)
+    void World::remove_solver(CollisionSolver* solver)
     {
         if (!solver) return;
         
@@ -62,22 +62,22 @@ namespace Physics
     void World::solve_collisions(float dt)
     {
         m_collision_detector->update();
-        std::vector<Physics::Collision::CollisionPair> collisions = m_collision_detector->get_collisions();
+        std::vector<CollisionPair> collisions = m_collision_detector->get_collisions();
 
-        for (Physics::Collision::Resolution::Constraints::CollisionSolver* solver : m_solvers) {
+        for (CollisionSolver* solver : m_solvers) {
             solver->solve(collisions, dt);
         }
     }
 
-    void World::set_gravity(const Physics::Math::Vector2& gravity)
+    void World::set_gravity(const Vector2& gravity)
     {
         m_gravity = gravity;
     }
 
     void World::step(float dt)
     {
-        for (Physics::Dynamics::CollisionBody* object : m_objects) {
-            Physics::Dynamics::RigidBody* rigid_body = dynamic_cast<Physics::Dynamics::RigidBody*>(object);
+        for (CollisionBody* object : m_objects) {
+            RigidBody* rigid_body = dynamic_cast<RigidBody*>(object);
 
             if (rigid_body) {
                 rigid_body->apply_force(rigid_body->get_mass()*m_gravity, rigid_body->get_polygon().get_centroid());
@@ -87,8 +87,8 @@ namespace Physics
         
         solve_collisions(dt);
 
-        for (Physics::Dynamics::CollisionBody* object : m_objects) {
-            Physics::Dynamics::RigidBody* rigid_body = dynamic_cast<Physics::Dynamics::RigidBody*>(object);
+        for (CollisionBody* object : m_objects) {
+            RigidBody* rigid_body = dynamic_cast<RigidBody*>(object);
 
             if (rigid_body) {
                 rigid_body->update_pos(dt);

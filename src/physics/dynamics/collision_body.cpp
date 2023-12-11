@@ -1,8 +1,8 @@
 #include "collision_body.h"
 
-namespace Physics::Dynamics
+namespace Physics
 {
-    CollisionBody::CollisionBody(Physics::Math::Polygon polygon)
+    CollisionBody::CollisionBody(Polygon polygon)
         : m_polygon(polygon)
     {
         if (!m_polygon.is_convex()) {
@@ -10,7 +10,7 @@ namespace Physics::Dynamics
         }
     }
 
-    Physics::Math::Polygon& CollisionBody::get_polygon()
+    Polygon& CollisionBody::get_polygon()
     {
         return m_polygon;
     }

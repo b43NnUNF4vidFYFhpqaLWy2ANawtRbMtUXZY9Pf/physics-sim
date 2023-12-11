@@ -5,11 +5,11 @@
 
 constexpr float TOLERANCE = 0.001;
 
-namespace Physics::Collision::Detection::Narrowphase
+namespace Physics
 {
-    Physics::Collision::Detection::Narrowphase::Contact EPA(Simplex2& simplex, const Physics::Math::Polygon& a, const Physics::Math::Polygon& b)
+    Contact EPA(Simplex2& simplex, const Polygon& a, const Polygon& b)
     {
-        Physics::Collision::Detection::Narrowphase::Contact contact;
+        Contact contact;
         contact.penetrationDepth = std::numeric_limits<float>::infinity();
         
         std::vector<CSOSupport> polytope = {simplex[0], simplex[1], simplex[2]};
@@ -17,16 +17,16 @@ namespace Physics::Collision::Detection::Narrowphase
         unsigned n_vertices;
         unsigned i, j;
         CSOSupport si, sj;
-        Physics::Math::Vector2 vertex_i, vertex_j;
-        Physics::Math::Vector2 ij;
+        Vector2 vertex_i, vertex_j;
+        Vector2 ij;
         CSOSupport min_si, min_sj;
-        Physics::Math::Vector2 normal;
+        Vector2 normal;
         float dist;
         unsigned splice_point = 0;
         CSOSupport support;
         float support_distance;
         bool boundary_found = false;
-        Physics::Math::Vector2 cp;
+        Vector2 cp;
         
         while (!boundary_found) {
             n_vertices = polytope.size();
@@ -40,7 +40,7 @@ namespace Physics::Collision::Detection::Narrowphase
                 vertex_j = sj.c;
 
                 ij = vertex_j - vertex_i;
-                normal = Physics::Math::Vector2(ij.y, -ij.x).norm();
+                normal = Vector2(ij.y, -ij.x).norm();
                 dist = normal.dot(vertex_i);
                 
                 if (dist < 0) {
@@ -75,15 +75,15 @@ namespace Physics::Collision::Detection::Narrowphase
         cp = contact.normal*contact.penetrationDepth;
         
         // Compute barycentric coordinates: https://computergraphics.stackexchange.com/a/4634
-        Physics::Math::Vector2 ci = min_si.c;
-        Physics::Math::Vector2 cj = min_sj.c;
+        Vector2 ci = min_si.c;
+        Vector2 cj = min_sj.c;
         float x = (cp - ci).mag()/(cj - ci).mag();
         float y = 1 - x;
         
-        Physics::Math::Vector2 Ai = min_si.a;
-        Physics::Math::Vector2 Aj = min_sj.a;
-        Physics::Math::Vector2 Bi = min_si.b;
-        Physics::Math::Vector2 Bj = min_sj.b;
+        Vector2 Ai = min_si.a;
+        Vector2 Aj = min_sj.a;
+        Vector2 Bi = min_si.b;
+        Vector2 Bj = min_sj.b;
         
         contact.a = x*Ai + y*Aj;
         contact.b = x*Bi + y*Bj;

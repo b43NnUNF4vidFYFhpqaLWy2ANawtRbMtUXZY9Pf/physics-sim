@@ -79,12 +79,12 @@ namespace Engine
         m_timer.toggle_pause();
     }
 
-    void Window::render_polygon(const Physics::Math::Polygon& polygon)
+    void Window::render_polygon(const Physics::Polygon& polygon)
     {
-        std::vector<Physics::Math::Vector2> vertices = polygon.get_vertices();
+        std::vector<Physics::Vector2> vertices = polygon.get_vertices();
         std::size_t n = vertices.size();
         std::size_t prev = n-1;
-        Physics::Math::Vector2 a, b;
+        Physics::Vector2 a, b;
 
         SDL_SetRenderDrawColor(m_renderer, 0x00, 0x00, 0x00, SDL_ALPHA_OPAQUE);
 
@@ -99,7 +99,7 @@ namespace Engine
 
     void Window::render_world(const Physics::World& world)
     {
-        for ( Physics::Dynamics::CollisionBody* object : world.get_objects() ) {
+        for ( Physics::CollisionBody* object : world.get_objects() ) {
             render_polygon(object->get_polygon());
         }
     }
