@@ -3,7 +3,6 @@
 #include "vector.h"
 #include "aabb.h"
 #include <vector>
-#include <initializer_list>
 
 namespace Physics
 {
@@ -16,7 +15,7 @@ namespace Physics
 
         Vector2 find_centroid() const;
     public:
-        Polygon(std::initializer_list<Vector2> vertices);
+        Polygon(std::vector<Vector2> vertices);
 
         void move(const Vector2& delta);
         void rotate(float v);

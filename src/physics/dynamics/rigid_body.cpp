@@ -5,8 +5,8 @@
 
 namespace Physics
 {
-    RigidBody::RigidBody(Polygon polygon, float mass, float restitution, float friction)
-        : CollisionBody(polygon),
+    RigidBody::RigidBody(std::vector<Vector2> vertices, float mass, float restitution, float friction)
+        : CollisionBody(vertices),
           m_mass(mass),
           m_restitution(restitution),
           m_friction(friction),
@@ -65,7 +65,7 @@ namespace Physics
     {
         m_force += f;
         
-        Vector2 r = p - m_polygon.get_centroid();
+        Vector2 r = p - get_centroid();
         m_torque += r.cross(f).z;
     }
 
@@ -80,8 +80,8 @@ namespace Physics
 
     void RigidBody::update_pos(float dt)
     {
-        m_polygon.move(m_vel*dt);
-        m_polygon.rotate(m_angularVelocity*dt);
+        move(m_vel*dt);
+        rotate(m_angularVelocity*dt);
     }
 
     void RigidBody::calc_moment_of_inertia()
@@ -90,11 +90,11 @@ namespace Physics
         float area = 0.0f;
         Vector2 center(0.0f, 0.0f, 0.0f);
 
-        std::vector<Vector2> vertices = m_polygon.get_vertices();
+        std::vector<Vector2> vertices = get_vertices();
         std::size_t n = vertices.size();
         std::size_t prev = n-1;
 
-        Vector2 centroid = m_polygon.get_centroid();
+        Vector2 centroid = get_centroid();
         Vector2 a;
         Vector2 b;
         float area_tri;

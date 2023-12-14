@@ -17,7 +17,7 @@ namespace Engine
         bool m_paused;
         
         float invert_y(float y);
-        void render_polygon(const Physics::Polygon& polygon);
+        void render_polygon(const Physics::Polygon* const polygon);
         void render_world(const Physics::World& world);
     public:
         Window(int width, int height);

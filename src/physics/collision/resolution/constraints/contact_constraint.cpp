@@ -10,8 +10,8 @@ namespace Physics
         d(contact.penetrationDepth),
         dt(dt),
 
-        r_a(contact.a - A->get_polygon().get_centroid()),
-        r_b(contact.b - B->get_polygon().get_centroid()),
+        r_a(contact.a - A->get_centroid()),
+        r_b(contact.b - B->get_centroid()),
         n(contact.normal),
         t(contact.tangent),
 

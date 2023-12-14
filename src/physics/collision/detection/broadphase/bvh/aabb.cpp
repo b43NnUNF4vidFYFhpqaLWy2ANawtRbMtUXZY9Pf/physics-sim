@@ -5,7 +5,7 @@
 
 namespace Physics
 {
-    AABB::AABB(Polygon& polygon)
+    AABB::AABB(const Polygon* const polygon)
     {
         const float inf = std::numeric_limits<float>::infinity();
 
@@ -14,7 +14,7 @@ namespace Physics
         float max_x = -inf;
         float max_y = -inf;
 
-        for (const Vector2& v : polygon.get_vertices()) {
+        for (const Vector2& v : polygon->get_vertices()) {
             if (v.x < min_x) {
                 min_x = v.x;
             }

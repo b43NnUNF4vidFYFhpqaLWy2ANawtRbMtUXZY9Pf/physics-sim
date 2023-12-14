@@ -79,9 +79,9 @@ namespace Engine
         m_timer.toggle_pause();
     }
 
-    void Window::render_polygon(const Physics::Polygon& polygon)
+    void Window::render_polygon(const Physics::Polygon* const polygon)
     {
-        std::vector<Physics::Vector2> vertices = polygon.get_vertices();
+        std::vector<Physics::Vector2> vertices = polygon->get_vertices();
         std::size_t n = vertices.size();
         std::size_t prev = n-1;
         Physics::Vector2 a, b;
@@ -100,7 +100,7 @@ namespace Engine
     void Window::render_world(const Physics::World& world)
     {
         for ( Physics::CollisionBody* object : world.get_objects() ) {
-            render_polygon(object->get_polygon());
+            render_polygon(object);
         }
     }
 

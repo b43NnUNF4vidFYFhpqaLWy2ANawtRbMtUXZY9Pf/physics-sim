@@ -8,7 +8,7 @@
 
 namespace Physics
 {
-    Polygon::Polygon(std::initializer_list<Vector2> vertices)
+    Polygon::Polygon(std::vector<Vector2> vertices)
         : m_vertices(vertices),
           m_centroid(find_centroid())
     {}
@@ -66,7 +66,7 @@ namespace Physics
 
     void Polygon::update_AABB()
     {
-        m_box = AABB(*this);
+        m_box = AABB(this);
     }
 
     const Vector2& Polygon::get_centroid() const

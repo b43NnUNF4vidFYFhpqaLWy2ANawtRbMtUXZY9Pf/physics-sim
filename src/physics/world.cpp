@@ -80,7 +80,7 @@ namespace Physics
             RigidBody* rigid_body = dynamic_cast<RigidBody*>(object);
 
             if (rigid_body) {
-                rigid_body->apply_force(rigid_body->get_mass()*m_gravity, rigid_body->get_polygon().get_centroid());
+                rigid_body->apply_force(rigid_body->get_mass()*m_gravity, rigid_body->get_centroid());
                 rigid_body->update_vel(dt);
             }
         }

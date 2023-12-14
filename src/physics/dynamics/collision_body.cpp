@@ -2,16 +2,11 @@
 
 namespace Physics
 {
-    CollisionBody::CollisionBody(Polygon polygon)
-        : m_polygon(polygon)
+    CollisionBody::CollisionBody(std::vector<Vector2> vertices)
+        : Polygon(vertices)
     {
-        if (!m_polygon.is_convex()) {
+        if (!is_convex()) {
             throw std::invalid_argument("Polygon should be convex");
         }
-    }
-
-    Polygon& CollisionBody::get_polygon()
-    {
-        return m_polygon;
     }
 }

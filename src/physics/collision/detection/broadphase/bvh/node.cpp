@@ -25,9 +25,8 @@ namespace Physics
 
     void Node::make_leaf(CollisionBody* body)
     {
-        Polygon& polygon = body->get_polygon();
-        AABB box(polygon);
-        polygon.set_AABB(box);
+        AABB box(body);
+        body->set_AABB(box);
 
         left_child = nullptr;
         right_child = nullptr;
@@ -39,7 +38,7 @@ namespace Physics
     void Node::refit_AABB(float margin)
     {
         if ( is_leaf() ) {
-            const AABB& tight = body->get_polygon().get_AABB();
+            const AABB& tight = body->get_AABB();
             const Vector2 margin_vec = {margin, margin};
             enlarged.min = tight.min - margin_vec;
             enlarged.max = tight.max + margin_vec;

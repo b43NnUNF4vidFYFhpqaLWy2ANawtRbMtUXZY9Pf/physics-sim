@@ -16,10 +16,10 @@ namespace Physics
         for (CollisionBody* other : *m_objects) {
             if (body == other) continue;
             
-            Simplex2 simplex = GJK(body->get_polygon(), other->get_polygon());
+            Simplex2 simplex = GJK(body, other);
             
             if (simplex.contains_origin() ) {
-                Contact contact = EPA(simplex, body->get_polygon(), other->get_polygon());
+                Contact contact = EPA(simplex, body, other);
                 collisions.emplace_back(body, other, contact);
             }
         }
@@ -35,10 +35,10 @@ namespace Physics
             for (CollisionBody* const b : *m_objects) {
                 if (a == b) break;
                 
-                Simplex2 simplex = GJK(a->get_polygon(), b->get_polygon());
+                Simplex2 simplex = GJK(a, b);
                 
                 if (simplex.contains_origin() ) {
-                    Contact contact = EPA(simplex, a->get_polygon(), b->get_polygon());
+                    Contact contact = EPA(simplex, a, b);
                     collisions.emplace_back(a, b, contact);
                 }
             }

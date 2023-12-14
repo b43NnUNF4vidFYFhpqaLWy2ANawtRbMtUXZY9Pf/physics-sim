@@ -4,10 +4,10 @@ namespace Physics
 {
     CSOSupport::CSOSupport() {}
 
-    CSOSupport::CSOSupport(const Polygon& poly_a, const Polygon& poly_b, Vector2 d)
+    CSOSupport::CSOSupport(const Polygon* const a_poly, const Polygon* const b_poly, Vector2 d)
     {
-        a = poly_a.support(d);
-        b = poly_b.support(-1*d);
+        a = a_poly->support(d);
+        b = b_poly->support(-1*d);
         c = a - b;
     }
 

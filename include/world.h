@@ -1,6 +1,5 @@
 #pragma once
 
-#include "rigid_body.h"
 #include "collision_solver.h"
 #include "collision_detector.h"
 #include <vector>

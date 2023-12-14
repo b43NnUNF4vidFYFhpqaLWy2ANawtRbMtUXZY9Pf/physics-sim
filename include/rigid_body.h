@@ -24,7 +24,7 @@ namespace Physics
 
         void calc_moment_of_inertia();
     public:
-        RigidBody(Polygon polygon, float mass, float restitution, float friction);
+        RigidBody(std::vector<Vector2>, float mass, float restitution, float friction);
 
         Vector2 get_vel() const;
         float get_angVel() const;

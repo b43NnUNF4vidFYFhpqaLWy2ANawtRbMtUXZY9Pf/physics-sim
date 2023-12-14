@@ -12,7 +12,7 @@ namespace Physics
         Vector2 a, b, c;
         
         CSOSupport();
-        CSOSupport(const Polygon& a, const Polygon& b, Vector2 d);
+        CSOSupport(const Polygon* const a_poly, const Polygon* const b_poly, Vector2 d);
     };
 
     struct Simplex2

@@ -7,15 +7,12 @@ namespace Physics
 {
     struct Node;
 
-    class CollisionBody
+    class CollisionBody : public Polygon
     {
-    protected:
-        Polygon m_polygon;
     public:
         std::shared_ptr<Node> m_node;
 
-        CollisionBody(Polygon polygon);
+        CollisionBody(std::vector<Vector2> vertices);
         virtual ~CollisionBody() = default; // Neccessary for dynamic_cast
-        Polygon& get_polygon();
     };
 }

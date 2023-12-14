@@ -2,7 +2,7 @@
 
 namespace Physics
 {
-    Simplex2 GJK(const Polygon& a, const Polygon& b)
+    Simplex2 GJK(const Polygon* const a, const Polygon* const b)
     {
         CSOSupport support(a, b, {1, 0});
         Simplex2 supports;

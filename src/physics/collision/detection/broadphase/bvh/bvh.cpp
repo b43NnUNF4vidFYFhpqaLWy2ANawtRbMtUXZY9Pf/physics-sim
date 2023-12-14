@@ -46,10 +46,9 @@ namespace Physics
             stack.pop();
 
             if ( node->is_leaf() ) {
-                Polygon& polygon = node->body->get_polygon();
-                polygon.update_AABB();
+                node->body->update_AABB();
 
-                if ( !(node->enlarged.contains(polygon.get_AABB())) ) {
+                if ( !(node->enlarged.contains(node->body->get_AABB())) ) {
                     invalids.push_back(node);
                 }
             } else {
@@ -131,7 +130,7 @@ namespace Physics
 
     std::vector<CollisionPair> AABBTree::query(CollisionBody* body) const
     {
-        const AABB query = body->get_polygon().get_AABB();
+        const AABB query = body->get_AABB();
 
         std::vector<CollisionPair> collisions;
         std::stack<std::shared_ptr<Node>> stack;
@@ -143,10 +142,10 @@ namespace Physics
             
             if (node->enlarged.collides(query)) {
                 if (node->is_leaf() && node->body != body) {
-                    Simplex2 simplex = GJK(body->get_polygon(), node->body->get_polygon());
+                    Simplex2 simplex = GJK(body, node->body);
                     
                     if (simplex.contains_origin() ) {
-                        Contact contact = EPA(simplex, body->get_polygon(), node->body->get_polygon());
+                        Contact contact = EPA(simplex, body, node->body);
                         collisions.emplace_back(body, node->body, contact);
                     }
                 } else {

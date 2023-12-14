@@ -7,7 +7,7 @@ constexpr float TOLERANCE = 0.001;
 
 namespace Physics
 {
-    Contact EPA(Simplex2& simplex, const Polygon& a, const Polygon& b)
+    Contact EPA(Simplex2& simplex, const Polygon* const a, const Polygon* const b)
     {
         Contact contact;
         contact.penetrationDepth = std::numeric_limits<float>::infinity();

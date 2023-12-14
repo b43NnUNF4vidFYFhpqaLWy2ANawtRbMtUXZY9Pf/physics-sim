@@ -6,7 +6,7 @@ namespace Physics
     PlaneConstraint::PlaneConstraint(RigidBody* rigid_body, const Vector2& p, const Vector2& n, const Vector2& t, float d, float beta)
         : Constraint(beta),
           rigid_body(rigid_body),
-          r(p - rigid_body->get_polygon().get_centroid()),
+          r(p - rigid_body->get_centroid()),
           n(n),
           t(t),
           d(d),
