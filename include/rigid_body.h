@@ -2,7 +2,6 @@
 
 #include "collision_body.h"
 #include "vector.h"
-#include "polygon.h"
 
 namespace Physics
 {

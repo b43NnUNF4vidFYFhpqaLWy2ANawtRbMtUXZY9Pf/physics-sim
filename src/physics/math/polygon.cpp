@@ -1,7 +1,5 @@
 #include "polygon.h"
 #include "vector.h"
-#include <initializer_list>
-#include <stdexcept>
 #include <cmath>
 #include <cstddef>
 #include <limits>

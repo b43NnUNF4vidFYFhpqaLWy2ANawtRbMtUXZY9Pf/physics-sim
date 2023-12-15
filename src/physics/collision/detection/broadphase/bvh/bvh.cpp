@@ -1,6 +1,6 @@
 #include "bvh.h"
-#include "gjk.h"
 #include "epa.h"
+#include "gjk.h"
 #include <stack>
 
 namespace Physics

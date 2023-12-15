@@ -1,8 +1,8 @@
-#include <algorithm>
 #include "world.h"
-#include "vector.h"
-#include "rigid_body.h"
 #include "collision.h"
+#include "rigid_body.h"
+#include "vector.h"
+#include <algorithm>
 
 namespace Physics
 {

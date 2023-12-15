@@ -1,7 +1,7 @@
 #include "rigid_body.h"
-#include <vector>
-#include <cstddef>
 #include <cmath>
+#include <cstddef>
+#include <vector>
 
 namespace Physics
 {

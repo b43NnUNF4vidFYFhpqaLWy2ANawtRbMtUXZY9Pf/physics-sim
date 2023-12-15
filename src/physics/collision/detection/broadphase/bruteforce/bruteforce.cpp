@@ -1,7 +1,7 @@
 #include "bruteforce.h"
-#include "simplex.h"
-#include "gjk.h"
 #include "epa.h"
+#include "gjk.h"
+#include "simplex.h"
 
 namespace Physics
 {

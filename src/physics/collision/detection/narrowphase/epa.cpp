@@ -1,7 +1,7 @@
 #include "epa.h"
 #include <limits>
-#include <vector>
 #include <stdlib.h>
+#include <vector>
 
 constexpr float TOLERANCE = 0.001;
 

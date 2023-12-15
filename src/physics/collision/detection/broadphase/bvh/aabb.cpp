@@ -1,7 +1,7 @@
 #include "aabb.h"
 #include "polygon.h"
-#include <limits>
 #include <algorithm>
+#include <limits>
 
 namespace Physics
 {
