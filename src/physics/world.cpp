@@ -6,6 +6,8 @@
 
 namespace Physics
 {
+    World::World() : m_collision_detector(nullptr) {}
+
     void World::set_collision_detector(CollisionDetector* collision_detector)
     {
         m_collision_detector = collision_detector;
@@ -25,14 +27,14 @@ namespace Physics
     void World::add_object(CollisionBody* object)
     {
         m_objects.push_back(object);
-        m_collision_detector->insert(object);
+        if (m_collision_detector) m_collision_detector->insert(object);
     }
 
     void World::remove_object(CollisionBody* object)
     {
         if (!object) return;
         
-        m_collision_detector->remove(object);
+        if (m_collision_detector) m_collision_detector->remove(object);
 
         auto itr = std::find(m_objects.begin(), m_objects.end(), object);
         if ( itr == m_objects.end() ) return;
@@ -66,6 +68,8 @@ namespace Physics
 
     void World::solve_collisions(float dt)
     {
+        if (!m_collision_detector) return;
+
         m_collision_detector->update();
         std::vector<CollisionPair> collisions = m_collision_detector->get_collisions();
 

@@ -17,7 +17,7 @@ namespace Physics
 
         void solve_collisions(float dt);
     public:
-        World() = default;
+        World();
 
         void set_collision_detector(CollisionDetector* collision_detector);
         CollisionDetector* get_collision_detector() const;
