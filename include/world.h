@@ -10,17 +10,17 @@ namespace Physics
     class World
     {
     private:
+        CollisionDetector* m_collision_detector;
         std::vector<CollisionBody*> m_objects;
         std::vector<CollisionSolver*> m_solvers;
-
         Vector2 m_gravity;
 
         void solve_collisions(float dt);
     public:
-        CollisionDetector* m_collision_detector;
-
         World() = default;
+
         void set_collision_detector(CollisionDetector* collision_detector);
+        CollisionDetector* get_collision_detector() const;
 
         void reserve_objects(std::size_t cap);
         void add_object(CollisionBody* object);

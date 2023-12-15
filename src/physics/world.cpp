@@ -12,6 +12,11 @@ namespace Physics
         m_collision_detector->set_objects(&m_objects);
     }
 
+    CollisionDetector* World::get_collision_detector() const
+    {
+        return m_collision_detector;
+    }
+
     void World::reserve_objects(std::size_t cap)
     {
         m_objects.reserve(cap);
