@@ -24,4 +24,14 @@ namespace Physics
     {
         m_box = box;
     }
+
+    std::shared_ptr<Node>& CollisionBody::get_node()
+    {
+        return m_node;
+    }
+
+    void CollisionBody::set_node(std::shared_ptr<Node> node)
+    {
+        m_node = std::move(node);
+    }
 }

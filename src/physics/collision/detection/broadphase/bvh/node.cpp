@@ -32,7 +32,7 @@ namespace Physics
         right_child = nullptr;
         
         this->body = body;
-        body->m_node = shared_from_this();
+        body->set_node(shared_from_this());
     }
 
     void Node::refit_AABB(float margin)

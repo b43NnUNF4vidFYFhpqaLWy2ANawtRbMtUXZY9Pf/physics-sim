@@ -100,10 +100,10 @@ namespace Physics
 
     void AABBTree::remove(CollisionBody* body)
     {
-        std::shared_ptr<Node>& node = body->m_node;
+        std::shared_ptr<Node>& node = body->get_node();
         
         node->body = nullptr;
-        body->m_node = nullptr;
+        body->set_node(nullptr);
         remove_node(node);
     }
 
