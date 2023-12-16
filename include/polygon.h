@@ -1,7 +1,6 @@
 #pragma once
 
 #include "vector.h"
-#include "aabb.h"
 #include <vector>
 
 namespace Physics
@@ -11,7 +10,6 @@ namespace Physics
     private:
         std::vector<Vector2> m_vertices;
         Vector2 m_centroid;
-        AABB m_box;
 
         Vector2 find_centroid() const;
     public:
@@ -23,10 +21,6 @@ namespace Physics
         
         const std::vector<Vector2>& get_vertices() const;
         const Vector2& get_centroid() const;
-
-        void update_AABB();
-        const AABB& get_AABB() const;
-        void set_AABB(const AABB& box);
 
         Vector2 support(Vector2 d) const;
     };
