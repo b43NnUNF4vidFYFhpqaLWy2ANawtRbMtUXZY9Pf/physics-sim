@@ -5,6 +5,8 @@
 
 namespace Physics
 {
+    class CollisionBody;
+
     struct CollisionPair
     {
         CollisionPair(CollisionBody* a, CollisionBody* b, Contact contact);

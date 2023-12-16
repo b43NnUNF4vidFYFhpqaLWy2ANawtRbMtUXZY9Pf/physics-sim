@@ -10,6 +10,16 @@ namespace Physics
         }
     }
 
+    const std::function<void(CollisionPair&, float)>& CollisionBody::get_collision_callback() const
+    {
+        return m_onCollision;
+    }
+
+    void CollisionBody::set_collision_callback(const std::function<void(CollisionPair&, float)>& callback)
+    {
+        m_onCollision = callback;
+    }
+
     void CollisionBody::update_AABB()
     {
         m_box = AABB(this);

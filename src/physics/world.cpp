@@ -76,6 +76,19 @@ namespace Physics
         for (CollisionSolver* solver : m_solvers) {
             solver->solve(collisions, dt);
         }
+        
+        send_collision_callbacks(collisions, dt);
+    }
+
+    void World::send_collision_callbacks(std::vector<CollisionPair>& collisions, float dt)
+    {
+        for (CollisionPair& collision : collisions) {
+            const std::function<void(CollisionPair&, float)>& callback_a = collision.a->get_collision_callback();
+            const std::function<void(CollisionPair&, float)>& callback_b = collision.b->get_collision_callback();
+
+            if (callback_a) callback_a(collision, dt);
+            if (callback_b) callback_b(collision, dt);
+        }
     }
 
     void World::set_gravity(const Vector2& gravity)

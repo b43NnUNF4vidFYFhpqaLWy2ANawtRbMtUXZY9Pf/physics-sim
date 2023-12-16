@@ -1,9 +1,10 @@
 #pragma once
 
-#include "collision_solver.h"
+#include "collision.h"
 #include "collision_detector.h"
-#include <vector>
+#include "collision_solver.h"
 #include <cstddef>
+#include <vector>
 
 namespace Physics
 {
@@ -16,6 +17,7 @@ namespace Physics
         Vector2 m_gravity;
 
         void solve_collisions(float dt);
+        void send_collision_callbacks(std::vector<CollisionPair>& collisions, float dt);
     public:
         World();
 
