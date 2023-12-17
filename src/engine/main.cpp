@@ -18,6 +18,7 @@ constexpr int SCREEN_HEIGHT = 720;
 int main()
 {
     Physics::World world;
+    Engine::Window window(SCREEN_WIDTH, SCREEN_HEIGHT, world);
 
     Physics::Bruteforce collision_detector;
     world.set_collision_detector(&collision_detector);
@@ -69,6 +70,7 @@ int main()
                     }
                 };
             std::unique_ptr<Physics::RigidBody> body = std::make_unique<Physics::RigidBody>(Physics::RigidBody(poly, square_mass, square_restitution, square_friction));
+            window.set_render_collisions(body.get());
             world.add_object(body.get());
             
             squares.push_back(std::move(body));
@@ -99,8 +101,7 @@ int main()
     Physics::CollisionBody ground(ground_poly);
     world.add_object(&ground);
     
-    Engine::Window window(SCREEN_WIDTH, SCREEN_HEIGHT);
-    window.loop(world);
+    window.loop();
     
     return EXIT_SUCCESS;
 }

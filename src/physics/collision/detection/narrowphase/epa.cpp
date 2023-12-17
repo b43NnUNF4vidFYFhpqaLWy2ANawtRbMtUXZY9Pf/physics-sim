@@ -71,6 +71,7 @@ namespace Physics
         
         contact.tangent = {contact.normal.y, -contact.normal.x};
         
+        // BUG: One of the contact points are generated wrongly
         // Generate contact points: https://stackoverflow.com/a/31780778
         cp = contact.normal*contact.penetrationDepth;
         

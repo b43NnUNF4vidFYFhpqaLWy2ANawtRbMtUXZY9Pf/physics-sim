@@ -1,13 +1,14 @@
 #include "window.h"
-#include <iostream>
+#include "SDL_render.h"
 
 namespace Engine
 {
-    Window::Window(int width, int height)
+    Window::Window(int width, int height, Physics::World& world)
         : m_window(nullptr),
           m_renderer(nullptr),
           m_running(true),
-          m_paused(false)
+          m_paused(false),
+          m_world(world)
     {
         if (SDL_Init(SDL_INIT_VIDEO) < 0) {
             SDL_Log("SDL_Error: %s", SDL_GetError());
@@ -51,7 +52,7 @@ namespace Engine
         }
     }
 
-    void Window::loop(Physics::World& world)
+    void Window::loop()
     {
         while (m_running) {
             handle_events();
@@ -60,8 +61,8 @@ namespace Engine
                 SDL_SetRenderDrawColor(m_renderer, 0xFF, 0xFF, 0xFF, SDL_ALPHA_OPAQUE);
                 SDL_RenderClear(m_renderer);
                 
-                world.step(m_timer.get_dt());
-                render_world(world);
+                m_world.step(m_timer.get_dt());
+                render_world();
 
                 SDL_RenderPresent(m_renderer);
             }
@@ -77,6 +78,23 @@ namespace Engine
     {
         m_paused = !m_paused;
         m_timer.toggle_pause();
+    }
+
+    void Window::set_render_collisions(Physics::CollisionBody* body)
+    {
+        // Can't pass a non-static member function as below, as
+        // the 'this' parameter is an implicit parameter
+        // body->set_collision_callback(render_collision);
+        body->set_collision_callback([this](Physics::CollisionPair collision, float dt)
+                                     {render_collision(collision, dt);}
+                                     );
+    }
+
+    void Window::render_world()
+    {
+        for ( const Physics::CollisionBody* object : m_world.get_objects() ) {
+            render_polygon(object);
+        }
     }
 
     void Window::render_polygon(const Physics::Polygon* const polygon)
@@ -97,11 +115,10 @@ namespace Engine
         }
     }
 
-    void Window::render_world(const Physics::World& world)
+    void Window::render_collision(Physics::CollisionPair collision, float dt)
     {
-        for ( Physics::CollisionBody* object : world.get_objects() ) {
-            render_polygon(object);
-        }
+        SDL_SetRenderDrawColor(m_renderer, 0x00, 0xFF, 0x00, SDL_ALPHA_OPAQUE);
+        SDL_RenderDrawLine(m_renderer, collision.contact.a.x, invert_y(collision.contact.a.y), collision.contact.b.x, invert_y(collision.contact.b.y));
     }
 
     float Window::invert_y(float y)
