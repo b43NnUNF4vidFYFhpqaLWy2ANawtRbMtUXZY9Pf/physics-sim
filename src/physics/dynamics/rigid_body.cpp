@@ -71,10 +71,10 @@ namespace Physics
 
     void RigidBody::update_vel(float dt)
     {
-        m_vel += (m_force/m_mass)*dt;
+        m_vel += m_invMass*(m_force*dt);
         m_force = {0, 0, 0};
         
-        m_angularVelocity += (m_torque/m_inertia)*dt;
+        m_angularVelocity += m_invInertia*(m_torque*dt);
         m_torque = 0.0f;
     }
 
