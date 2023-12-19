@@ -2,9 +2,11 @@
 
 #include "collision.h"
 #include "polygon.h"
+#include "rigid_body.h"
 #include "timer.h"
 #include "world.h"
 #include <SDL2/SDL.h>
+#include <memory>
 
 
 namespace Engine
@@ -19,6 +21,9 @@ namespace Engine
         bool m_paused;
 
         Physics::World& m_world;
+        std::vector<std::unique_ptr<Physics::RigidBody>> m_generated;
+
+        void gen_random();
         
         void render_world();
         void render_polygon(const Physics::Polygon* const polygon);

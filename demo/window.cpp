@@ -1,5 +1,7 @@
 #include "window.h"
 #include "SDL_render.h"
+#include "rigid_body.h"
+#include <SDL_mouse.h>
 
 namespace Engine
 {
@@ -48,6 +50,8 @@ namespace Engine
                 switch (e.key.keysym.sym) {
                     case SDLK_SPACE: toggle_pause(); break;
                 }
+            } else if (e.type == SDL_MOUSEBUTTONDOWN) {
+                gen_random();
             }
         }
     }
@@ -88,6 +92,20 @@ namespace Engine
         body->set_collision_callback([this](Physics::CollisionPair collision, float dt)
                                      {render_collision(collision, dt);}
                                      );
+    }
+
+    void Window::gen_random()
+    {
+        int x, y;
+        SDL_GetMouseState(&x, &y);
+        y = invert_y(y);
+        
+        Physics::Polygon polygon = Physics::Polygon::gen_random(50, {static_cast<float>(x), static_cast<float>(y)});
+        std::unique_ptr<Physics::RigidBody> body = std::make_unique<Physics::RigidBody>(polygon.get_vertices(), 50, 0.2, 0.5);
+        set_render_collisions(body.get());
+        m_world.add_object(body.get());
+        
+        m_generated.push_back(std::move(body));
     }
 
     void Window::render_world()
