@@ -1,8 +1,10 @@
 #include "polygon.h"
 #include "vector.h"
+#include <algorithm>
 #include <cmath>
 #include <cstddef>
 #include <limits>
+#include <random>
 
 namespace Physics
 {
@@ -10,6 +12,29 @@ namespace Physics
         : m_vertices(vertices),
           m_centroid(find_centroid())
     {}
+
+    Polygon Polygon::gen_random(unsigned r, const Vector2& at)
+    {
+        std::random_device rd;
+        std::mt19937 gen(rd());
+
+        std::uniform_int_distribution<> int_dist(3, 12);
+        unsigned n = int_dist(rd);
+
+        std::uniform_real_distribution<> real_dist(0.0, 2.0*M_PI);
+
+        std::vector<float> angles(n);
+        std::generate(angles.begin(), angles.end(), [&real_dist, &rd]() {return real_dist(rd);});
+        std::sort(angles.begin(), angles.end());
+        
+        std::vector<Vector2> vertices;
+        vertices.reserve(n);
+        for (float angle : angles) {
+            vertices.emplace_back(at.x + r*sin(angle), at.y + r*cos(angle));
+        }
+
+        return Polygon(vertices);
+    }
 
     void Polygon::move(const Vector2& delta)
     {

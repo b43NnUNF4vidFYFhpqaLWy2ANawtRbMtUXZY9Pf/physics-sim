@@ -15,6 +15,8 @@ namespace Physics
     public:
         Polygon(std::vector<Vector2> vertices);
 
+        static Polygon gen_random(unsigned r, const Vector2& at);
+
         void move(const Vector2& delta);
         void rotate(float v);
         bool is_convex() const;
