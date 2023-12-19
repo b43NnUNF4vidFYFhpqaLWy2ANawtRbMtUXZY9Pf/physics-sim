@@ -3,11 +3,13 @@
 
 namespace Physics
 {
-  ContactConstraint::ContactConstraint(RigidBody* A, RigidBody* B, Contact& contact, float beta, float dt) 
+  ContactConstraint::ContactConstraint(RigidBody* A, RigidBody* B, Contact& contact, float beta, float slop_p, float slop_r, float dt) 
       : Constraint(beta),
         A(A),
         B(B),
         d(contact.penetrationDepth),
+        slop_p(slop_p),
+        slop_r(slop_r),
         dt(dt),
 
         r_a(contact.a - A->get_centroid()),
@@ -60,7 +62,7 @@ namespace Physics
         + b_vel
         + b_angVel.cross(r_b);
       float closing_vel = n.dot(relative_vel);
-      float b = -(beta/dt)*d + c_r*closing_vel;
+      float b = -(beta/dt)*std::max<float>(d - slop_p, 0.0) + c_r*std::max<float>(closing_vel - slop_r, 0.0);
 
       float lambda = m_eff*(-(jv + b));
       float old_total_lambda = m_total_lambda;

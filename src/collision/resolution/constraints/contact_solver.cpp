@@ -4,8 +4,10 @@
 
 namespace Physics
 {
-    ContactConstraintSolver::ContactConstraintSolver(unsigned iterations, float beta)
+    ContactConstraintSolver::ContactConstraintSolver(unsigned iterations, float slop_p, float slop_r, float beta)
         : m_iterations(iterations),
+          slop_p(slop_p),
+          slop_r(slop_r),
           beta(beta)
     {}
 
@@ -21,7 +23,7 @@ namespace Physics
             RigidBody* b = dynamic_cast<RigidBody*>(collision.b);
             
             if (a && b) {
-                constraints.emplace_back(a, b, collision.contact, beta, dt);
+                constraints.emplace_back(a, b, collision.contact, beta, slop_p, slop_r, dt);
             }
         }
 

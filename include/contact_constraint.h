@@ -1,7 +1,6 @@
 #pragma once
 
 #include "constraint.h"
-#include "collision.h"
 #include "rigid_body.h"
 
 namespace Physics
@@ -12,6 +11,8 @@ namespace Physics
         RigidBody* A;
         RigidBody* B;
         float d;
+        float slop_p;
+        float slop_r;
         float dt;
 
         Vector2 r_a, r_b;
@@ -24,7 +25,7 @@ namespace Physics
         
         float m_total_lambda, m_total_lambda_t;
     public:
-        ContactConstraint(RigidBody* A, RigidBody* B, Contact& contact, float beta, float dt);
+        ContactConstraint(RigidBody* A, RigidBody* B, Contact& contact, float beta, float slop_p, float slop_r, float dt);
         void solve() override;
     };
 }

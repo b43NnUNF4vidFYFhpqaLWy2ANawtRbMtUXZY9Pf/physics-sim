@@ -8,9 +8,11 @@ namespace Physics
     {
     private:
         unsigned m_iterations;
+        float slop_p;
+        float slop_r;
         float beta;
     public:
-        ContactConstraintSolver(unsigned iterations, float beta);
+        ContactConstraintSolver(unsigned iterations, float slop_p, float slop_, float beta);
         void solve(std::vector<CollisionPair>& collisions, float dt) override;
     };
 }

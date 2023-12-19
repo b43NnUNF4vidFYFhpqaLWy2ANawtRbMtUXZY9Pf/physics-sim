@@ -29,9 +29,9 @@ int main()
     Physics::Vector2 gravity(0.0, -10*9.82);
     world.set_gravity(gravity);
 
-    Physics::PlaneConstraintSolver plane_solver(6, 0.8);
+    Physics::PlaneConstraintSolver plane_solver(16, 0.8);
     world.add_solver(&plane_solver);
-    Physics::ContactConstraintSolver contact_solver(6, 0.2);
+    Physics::ContactConstraintSolver contact_solver(10, 2, 0.5, 0.2);
     world.add_solver(&contact_solver);
 
     const int square_size = 10;
