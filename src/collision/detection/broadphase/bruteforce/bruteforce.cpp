@@ -9,27 +9,9 @@ namespace Physics
     void Bruteforce::insert(CollisionBody* body) {};
     void Bruteforce::remove(CollisionBody* body) {};
 
-    std::vector<CollisionPair> Bruteforce::query(CollisionBody* body) const
+    std::vector<CollisionPair>& Bruteforce::get_collisions()
     {
-        std::vector<CollisionPair> collisions;
-
-        for (CollisionBody* other : *m_objects) {
-            if (body == other) continue;
-            
-            Simplex2 simplex = GJK(body, other);
-            
-            if (simplex.contains_origin() ) {
-                Contact contact = EPA(simplex, body, other);
-                collisions.emplace_back(body, other, contact);
-            }
-        }
-        
-        return collisions;
-    }
-
-    std::vector<CollisionPair> Bruteforce::get_collisions() const
-    {
-        std::vector<CollisionPair> collisions;
+        m_collisions.clear();
 
         for (CollisionBody* const a : *m_objects) {
             for (CollisionBody* const b : *m_objects) {
@@ -39,11 +21,13 @@ namespace Physics
                 
                 if (simplex.contains_origin() ) {
                     Contact contact = EPA(simplex, a, b);
-                    collisions.emplace_back(a, b, contact);
+                    m_collisions.emplace_back(a, b, contact);
                 }
             }
         }
         
-        return collisions;
+        m_collisions.shrink_to_fit();
+
+        return m_collisions;
     }
 }

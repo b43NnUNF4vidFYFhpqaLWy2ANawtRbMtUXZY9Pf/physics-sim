@@ -128,7 +128,7 @@ namespace Physics
         }
     }
 
-    std::vector<CollisionPair> AABBTree::query(CollisionBody* body) const
+    std::vector<CollisionPair> AABBTree::query(CollisionBody* body)
     {
         const AABB query = body->get_AABB();
 
@@ -158,16 +158,19 @@ namespace Physics
         return collisions;
     }
 
-    std::vector<CollisionPair> AABBTree::get_collisions() const
+    std::vector<CollisionPair>& AABBTree::get_collisions()
     {
-        std::vector<CollisionPair> collisions;
+        // TODO: Incorrect implementation
+        m_collisions.clear();
         
         for (CollisionBody* const body : *m_objects) {
             std::vector<CollisionPair> target_collisions = query(body);
-            collisions.reserve(collisions.size() + target_collisions.size());
-            collisions.insert(collisions.end(), target_collisions.begin(), target_collisions.end());
+            m_collisions.reserve(m_collisions.size() + target_collisions.size());
+            m_collisions.insert(m_collisions.end(), target_collisions.begin(), target_collisions.end());
         }
         
-        return collisions;
+        m_collisions.shrink_to_fit();
+
+        return m_collisions;
     }
 }
