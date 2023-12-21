@@ -12,8 +12,8 @@ namespace Physics
     {
         if (dt == 0) return;
 
-        std::vector<PlaneConstraint> constraints;
-        constraints.reserve(collisions.size());
+        m_constraints.clear();
+        m_constraints.reserve(collisions.size());
         
         for (CollisionPair& collision: collisions) {
             RigidBody* a = dynamic_cast<RigidBody*>(collision.a);
@@ -21,16 +21,18 @@ namespace Physics
             
             if (a && !b) {
                 // The contact normal always points from body a to body b, but the plane normal should point from plane to rigid body
-                constraints.emplace_back(a, collision.contact.a, (-1)*collision.contact.normal, (-1)*collision.contact.tangent, collision.contact.penetrationDepth, beta);
+                m_constraints.emplace_back(a, collision.contact.a, (-1)*collision.contact.normal, (-1)*collision.contact.tangent, collision.contact.penetrationDepth, beta);
             } else if (b && !a) {
-                constraints.emplace_back(b, collision.contact.b, collision.contact.normal, collision.contact.tangent, collision.contact.penetrationDepth, beta);
+                m_constraints.emplace_back(b, collision.contact.b, collision.contact.normal, collision.contact.tangent, collision.contact.penetrationDepth, beta);
             }
         }
 
         for (unsigned i = 0; i < m_iterations; i++) {
-            for (PlaneConstraint& constraint : constraints) {
+            for (PlaneConstraint& constraint : m_constraints) {
                 constraint.solve();
             }
         }
+
+        m_constraints.shrink_to_fit();
     }
 }

@@ -15,22 +15,24 @@ namespace Physics
     {
         if (dt == 0) return;
 
-        std::vector<ContactConstraint> constraints;
-        constraints.reserve(collisions.size());
+        m_constraints.clear();
+        m_constraints.reserve(collisions.size());
         
         for (CollisionPair& collision: collisions) {
             RigidBody* a = dynamic_cast<RigidBody*>(collision.a);
             RigidBody* b = dynamic_cast<RigidBody*>(collision.b);
             
             if (a && b) {
-                constraints.emplace_back(a, b, collision.contact, beta, slop_p, slop_r, dt);
+                m_constraints.emplace_back(a, b, collision.contact, beta, slop_p, slop_r, dt);
             }
         }
 
         for (unsigned i = 0; i < m_iterations; i++) {
-            for (ContactConstraint& constraint : constraints) {
+            for (ContactConstraint& constraint : m_constraints) {
                 constraint.solve();
             }
         }
+
+        m_constraints.shrink_to_fit();
     }
 }
