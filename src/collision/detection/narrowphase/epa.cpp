@@ -71,14 +71,13 @@ namespace Physics
         
         contact.tangent = {contact.normal.y, -contact.normal.x};
         
-        // BUG: One of the contact points are generated wrongly (as if the weight is the complement)
         // Generate contact points: https://stackoverflow.com/a/31780778
         cp = contact.normal*contact.penetrationDepth;
         
         // Compute barycentric coordinates: https://computergraphics.stackexchange.com/a/4634
         Vector2 ci = min_si.c;
         Vector2 cj = min_sj.c;
-        float x = (cp - ci).mag()/(cj - ci).mag();
+        float x = (cp - cj).mag()/(ci - cj).mag();
         float y = 1 - x;
         
         Vector2 Ai = min_si.a;
