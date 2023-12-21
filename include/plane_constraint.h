@@ -10,7 +10,7 @@ namespace Physics
     private:
         RigidBody* rigid_body;
         const Vector2 r;
-        const Vector2& n, t;
+        const Vector2 n, t;
         float d;
 
         float inv_mass, inv_inertia, c_f;

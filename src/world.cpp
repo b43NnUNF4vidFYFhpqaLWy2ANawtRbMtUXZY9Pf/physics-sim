@@ -26,9 +26,7 @@ namespace Physics
 
     void World::add_object(CollisionBody* object)
     {
-        // m_objects.push_back(object);
-        // BUG: The order in which the objects are added matters, perhaps connected to the bug that EPA only generates one correct contact point
-        m_objects.insert(m_objects.begin(), object); // Temporary fix: Insert at front
+        m_objects.push_back(object);
         if (m_collision_detector) m_collision_detector->insert(object);
     }
 

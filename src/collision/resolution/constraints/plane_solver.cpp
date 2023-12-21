@@ -20,7 +20,8 @@ namespace Physics
             RigidBody* b = dynamic_cast<RigidBody*>(collision.b);
             
             if (a && !b) {
-                constraints.emplace_back(a, collision.contact.a, collision.contact.normal, collision.contact.tangent, collision.contact.penetrationDepth, beta);
+                // The contact normal always points from body a to body b, but the plane normal should point from plane to rigid body
+                constraints.emplace_back(a, collision.contact.a, (-1)*collision.contact.normal, (-1)*collision.contact.tangent, collision.contact.penetrationDepth, beta);
             } else if (b && !a) {
                 constraints.emplace_back(b, collision.contact.b, collision.contact.normal, collision.contact.tangent, collision.contact.penetrationDepth, beta);
             }
