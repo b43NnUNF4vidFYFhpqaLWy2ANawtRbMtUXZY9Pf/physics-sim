@@ -20,11 +20,16 @@ namespace Physics
                 for (std::shared_ptr<Node>& node : invalids) {
                     std::shared_ptr<Node>& parent = node->parent;
                     std::shared_ptr<Node>& sibling = node->get_sibling();
-                    std::shared_ptr<Node>& grandparent_parent_link = parent->parent ? (parent == parent->parent->left_child)
-                        ? parent->parent->left_child : parent->parent->right_child
-                    : m_root;
-                    
-                    sibling->parent = parent->parent;
+                    std::shared_ptr<Node>& grandparent = parent->parent;
+                    // Get grandparents pointer to parent
+                    std::shared_ptr<Node>& grandparent_parent_link =
+                        grandparent ?
+                            parent == grandparent->left_child ?
+                                grandparent->left_child
+                            : grandparent->right_child
+                        : m_root;
+
+                    sibling->parent = grandparent;
                     grandparent_parent_link = sibling; // parent now deleted
                     
                     node->refit_AABB(m_margin);
@@ -117,14 +122,19 @@ namespace Physics
             if (sibling) {
                 sibling->parent = parent->parent;
                 
-                std::shared_ptr<Node>& grandparent_parent_link = parent == parent->parent->left_child ? parent->parent->left_child : parent->parent->right_child;
+                std::shared_ptr<Node>& grandparent = parent->parent;
+                std::shared_ptr<Node>& grandparent_parent_link =
+                    parent == grandparent->left_child ?
+                        grandparent->left_child
+                    : grandparent->right_child;
+
                 grandparent_parent_link = sibling; // parent now deleted
             } else {
                 m_root = sibling;
                 sibling->parent = nullptr;
             }
         } else {
-            m_root = nullptr; // node gets deleted
+            m_root = nullptr;
         }
     }
 
@@ -144,7 +154,7 @@ namespace Physics
                 if (node->is_leaf() && node->body != body) {
                     Simplex2 simplex = GJK(body, node->body);
                     
-                    if (simplex.contains_origin() ) {
+                    if (simplex.contains_origin()) {
                         Contact contact = EPA(simplex, body, node->body);
                         collisions.emplace_back(body, node->body, contact);
                     }
