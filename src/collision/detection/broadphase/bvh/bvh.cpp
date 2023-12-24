@@ -15,9 +15,11 @@ namespace Physics
             if ( m_root->is_leaf() ) {
                 m_root->refit_AABB(m_margin);
             } else {
-                std::vector<std::shared_ptr<Node>> invalids = get_invalid_nodes(m_root);
+                m_invalids.clear();
+                m_invalids.reserve(m_objects->size());
+                update_invalid_nodes(m_root);
                 
-                for (std::shared_ptr<Node>& node : invalids) {
+                for (std::shared_ptr<Node>& node : m_invalids) {
                     std::shared_ptr<Node>& parent = node->parent;
                     std::shared_ptr<Node>& sibling = node->get_sibling();
                     std::shared_ptr<Node>& grandparent = parent->parent;
@@ -35,34 +37,24 @@ namespace Physics
                     node->refit_AABB(m_margin);
                     insert_node(node, m_root);
                 }
+                
+                m_invalids.shrink_to_fit();
             }
         }
     }
 
-    std::vector<std::shared_ptr<Node>> AABBTree::get_invalid_nodes(std::shared_ptr<Node>& root)
+    void AABBTree::update_invalid_nodes(std::shared_ptr<Node>& node)
     {
-        std::vector<std::shared_ptr<Node>> invalids;
-        invalids.reserve(m_objects->size());
-        std::stack<std::shared_ptr<Node>> stack;
+        if ( node->is_leaf() ) {
+            node->body->update_AABB();
 
-        stack.push(root);
-        while (!stack.empty()) {
-            std::shared_ptr<Node> node = stack.top();
-            stack.pop();
-
-            if ( node->is_leaf() ) {
-                node->body->update_AABB();
-
-                if ( !(node->enlarged.contains(node->body->get_AABB())) ) {
-                    invalids.push_back(node);
-                }
-            } else {
-                if (node->left_child) stack.push(node->left_child);
-                if (node->right_child) stack.push(node->right_child);
+            if ( !(node->enlarged.contains(node->body->get_AABB())) ) {
+                m_invalids.push_back(node);
             }
+        } else {
+            update_invalid_nodes(node->left_child);
+            update_invalid_nodes(node->right_child);
         }
-        
-        return invalids;
     }
 
     void AABBTree::insert(CollisionBody* body)

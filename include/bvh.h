@@ -11,8 +11,10 @@ namespace Physics
     private:
         std::shared_ptr<Node> m_root;
         float m_margin;
+
+        std::vector<std::shared_ptr<Node>> m_invalids;
         
-        std::vector<std::shared_ptr<Node>> get_invalid_nodes(std::shared_ptr<Node>& root);
+        void update_invalid_nodes(std::shared_ptr<Node>& node);
         void insert_node(std::shared_ptr<Node>& node, std::shared_ptr<Node>& parent);
         void remove_node(std::shared_ptr<Node>& node);
     public:
