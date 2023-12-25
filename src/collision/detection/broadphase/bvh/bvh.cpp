@@ -1,7 +1,6 @@
 #include "bvh.h"
 #include "epa.h"
 #include "gjk.h"
-#include <stack>
 
 namespace Physics
 {
@@ -130,49 +129,77 @@ namespace Physics
         }
     }
 
-    std::vector<CollisionPair> AABBTree::query(CollisionBody* body)
-    {
-        const AABB query = body->get_AABB();
-
-        std::vector<CollisionPair> collisions;
-        std::stack<std::shared_ptr<Node>> stack;
-        
-        stack.push(m_root);
-        while (!stack.empty()) {
-            std::shared_ptr<Node> node = stack.top();
-            stack.pop();
-            
-            if (node->enlarged.collides(query)) {
-                if (node->is_leaf() && node->body != body) {
-                    Simplex2 simplex = GJK(body, node->body);
-                    
-                    if (simplex.contains_origin()) {
-                        Contact contact = EPA(simplex, body, node->body);
-                        collisions.emplace_back(body, node->body, contact);
-                    }
-                } else {
-                    if (node->left_child) stack.push(node->left_child);
-                    if (node->right_child) stack.push(node->right_child);
-                }
-            }
-        }
-        
-        return collisions;
-    }
-
     std::vector<CollisionPair>& AABBTree::get_collisions()
     {
-        // TODO: Incorrect implementation
         m_collisions.clear();
-        
-        for (CollisionBody* const body : *m_objects) {
-            std::vector<CollisionPair> target_collisions = query(body);
-            m_collisions.reserve(m_collisions.size() + target_collisions.size());
-            m_collisions.insert(m_collisions.end(), target_collisions.begin(), target_collisions.end());
-        }
-        
-        m_collisions.shrink_to_fit();
 
+        if (!m_root || m_root->is_leaf()) {
+            return m_collisions;
+        } else {
+            clear_crossed_flags(m_root);
+            compute_collisions(m_root->left_child, m_root->right_child);
+        }
+
+        clear_crossed_flags(m_root);
+
+        m_collisions.shrink_to_fit();
         return m_collisions;
+    }
+
+    void AABBTree::cross_children(std::shared_ptr<Node>& node)
+    {
+        if (!node->children_crossed) {
+            compute_collisions(node->left_child, node->right_child);
+            node->children_crossed = true;
+        }
+    }
+
+    void AABBTree::clear_crossed_flags(std::shared_ptr<Node>& node)
+    {
+        node->children_crossed = false;
+
+        if (!node->is_leaf()) {
+            clear_crossed_flags(node->left_child);
+            clear_crossed_flags(node->right_child);
+        }
+    }
+
+    void AABBTree::compute_collisions(std::shared_ptr<Node>& a, std::shared_ptr<Node>& b)
+    {
+        if (a->is_leaf()) {
+            if (b->is_leaf()) {
+                const AABB& aabb_a = a->body->get_AABB();
+                const AABB& aabb_b = b->body->get_AABB();
+
+                if (aabb_a.collides(aabb_b)) {
+                    Simplex2 simplex = GJK(a->body, b->body);
+                    
+                    if (simplex.contains_origin() ) {
+                        Contact contact = EPA(simplex, a->body, b->body);
+                        m_collisions.emplace_back(a->body, b->body, contact);
+                    }
+                }
+            } else {
+                cross_children(b);
+
+                compute_collisions(a, b->left_child);
+                compute_collisions(a, b->right_child);
+            }
+        } else {
+            if (b->is_leaf()) {
+                cross_children(a);
+
+                compute_collisions(a->left_child, b);
+                compute_collisions(a->right_child, b);
+            } else {
+                cross_children(a);
+                cross_children(b);
+
+                compute_collisions(a->left_child, b->left_child);
+                compute_collisions(a->left_child, b->right_child);
+                compute_collisions(a->right_child, b->left_child);
+                compute_collisions(a->right_child, b->right_child);
+            }
+        }
     }
 }

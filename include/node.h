@@ -11,6 +11,7 @@ namespace Physics
         std::shared_ptr<Node> parent;
         std::shared_ptr<Node> left_child;
         std::shared_ptr<Node> right_child;
+        bool children_crossed;
         
         AABB enlarged;
         CollisionBody* body;

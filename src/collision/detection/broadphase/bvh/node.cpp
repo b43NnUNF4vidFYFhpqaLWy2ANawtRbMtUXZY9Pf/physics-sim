@@ -6,6 +6,7 @@ namespace Physics
         : parent(nullptr),
           left_child(nullptr),
           right_child(nullptr),
+          children_crossed(false),
           body(nullptr)
     {}
 
