@@ -5,7 +5,6 @@ set(PHYSICS_SOURCE_FILES
     math/vector.cpp
     math/polygon.cpp
     collision/collision.cpp
-    collision/detection/collision_detector.cpp
     collision/detection/broadphase/bruteforce/bruteforce.cpp
     collision/detection/broadphase/bvh/aabb.cpp
     collision/detection/broadphase/bvh/node.cpp

@@ -12,6 +12,7 @@ namespace Physics
         std::shared_ptr<Node> m_root;
         float m_margin;
 
+        std::vector<CollisionBody*>* m_objects;
         std::vector<CollisionPair> m_collisions;
         std::vector<std::shared_ptr<Node>> m_invalids;
 
@@ -25,6 +26,7 @@ namespace Physics
     public:
         AABBTree(float margin);
         
+        void set_objects(std::vector<CollisionBody*>* objects) override;
         void update() override;
         void insert(CollisionBody* body) override;
         void remove(CollisionBody* body) override;

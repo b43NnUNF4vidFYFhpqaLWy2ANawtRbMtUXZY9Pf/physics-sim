@@ -5,6 +5,11 @@
 
 namespace Physics
 {
+    void Bruteforce::set_objects(std::vector<CollisionBody*>* objects)
+    {
+        m_objects = objects;
+    }
+
     void Bruteforce::update() {}
     void Bruteforce::insert(CollisionBody* body) {};
     void Bruteforce::remove(CollisionBody* body) {};

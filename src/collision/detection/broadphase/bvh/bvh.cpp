@@ -8,6 +8,11 @@ namespace Physics
         : m_margin(margin)
     {}
 
+    void AABBTree::set_objects(std::vector<CollisionBody*>* objects)
+    {
+        m_objects = objects;
+    }
+
     void AABBTree::update()
     {
         if (m_root) {
