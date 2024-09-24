@@ -51,7 +51,9 @@ namespace Engine
                     case SDLK_SPACE: toggle_pause(); break;
                 }
             } else if (e.type == SDL_MOUSEBUTTONDOWN) {
-                gen_random();
+                switch (e.button.button) {
+                    case SDL_BUTTON_LEFT: gen_random(); break;
+                }
             }
         }
     }
