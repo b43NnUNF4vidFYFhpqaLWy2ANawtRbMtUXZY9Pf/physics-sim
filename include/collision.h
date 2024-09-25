@@ -1,6 +1,5 @@
 #pragma once
 
-#include "collision_body.h"
 #include "contact.h"
 
 namespace Physics

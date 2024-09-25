@@ -1,8 +1,9 @@
 #pragma once
 
 #include "aabb.h"
-#include "collision.h"
 #include "polygon.h"
+#include "collision_notifier.h"
+
 #include <functional>
 #include <memory>
 
@@ -11,7 +12,7 @@ namespace Physics
     struct CollisionPair;
     struct Node;
 
-    class CollisionBody : public Polygon
+    class CollisionBody : public Polygon, public CollisionNotifier
     {
     private:
         std::function<void(CollisionPair&, float)> m_onCollision;

@@ -73,6 +73,11 @@ namespace Physics
         m_collision_detector->update();
         std::vector<CollisionPair> collisions = m_collision_detector->get_collisions();
 
+        for (const CollisionPair& collision : collisions) {
+            /* For one collision, there will be a -> b and b -> a */
+            collision.a->notify(collision);
+        }
+
         for (CollisionSolver* solver : m_solvers) {
             solver->solve(collisions, dt);
         }

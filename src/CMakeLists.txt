@@ -5,6 +5,7 @@ set(PHYSICS_SOURCE_FILES
     math/vector.cpp
     math/polygon.cpp
     collision/collision.cpp
+    collision/observer/collision_notifier.cpp
     collision/detection/broadphase/bruteforce/bruteforce.cpp
     collision/detection/broadphase/bvh/aabb.cpp
     collision/detection/broadphase/bvh/node.cpp
@@ -25,6 +26,8 @@ set(PHYSICS_HEADER_FILES
     ../include/vector.h
     ../include/polygon.h
     ../include/collision.h
+    ../include/collision_observer.h
+    ../include/collision_notifier.h
     ../include/collision_detector.h
     ../include/bruteforce.h
     ../include/aabb.h
