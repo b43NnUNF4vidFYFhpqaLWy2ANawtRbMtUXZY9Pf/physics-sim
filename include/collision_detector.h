@@ -8,6 +8,7 @@ namespace Physics
     class CollisionDetector
     {
     public:
+        virtual ~CollisionDetector() {};
         virtual void set_objects(std::vector<CollisionBody*>* objects) = 0;
         virtual void update() = 0;
         virtual void insert(CollisionBody* body) = 0;
