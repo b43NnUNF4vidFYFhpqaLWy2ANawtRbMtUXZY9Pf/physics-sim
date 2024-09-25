@@ -4,12 +4,14 @@ set(DEMO_SOURCE_FILES
     window.cpp
     timer.cpp
     main.cpp
+    collision_logger.cpp
     demos/slope_demo_world.cpp
     )
 
 set(DEMO_HEADER_FILES
     window.h
     timer.h
+    collision_logger.h
     demos/demo_world.h
     demos/slope_demo_world.h
     )

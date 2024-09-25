@@ -22,8 +22,15 @@ namespace Engine
         m_world.add_object(&m_right_body);
         m_world.add_object(&m_ground);
 
+        m_ground.attach(&m_logger);
+
         m_left_body.rotate(-0.785);
         m_right_body.rotate(0.785);
+    }
+
+    SlopeDemoWorld::~SlopeDemoWorld()
+    {
+        m_ground.detach(&m_logger);
     }
 
     Physics::World& SlopeDemoWorld::get_world()

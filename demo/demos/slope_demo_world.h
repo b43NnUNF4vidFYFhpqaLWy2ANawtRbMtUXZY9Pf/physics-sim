@@ -2,6 +2,7 @@
 
 #include "demo_world.h"
 #include "bvh.h"
+#include "collision_logger.h"
 #include "plane_solver.h"
 #include "contact_solver.h"
 
@@ -14,6 +15,7 @@ namespace Engine
     protected:
         Physics::World m_world;
         Physics::AABBTree m_collision_detector;
+        Engine::CollisionLogger m_logger;
         Physics::PlaneConstraintSolver m_plane_solver;
         Physics::ContactConstraintSolver m_contact_solver;
         Physics::Vector2 m_gravity;
@@ -25,6 +27,8 @@ namespace Engine
         Physics::CollisionBody m_ground;
     public:
         SlopeDemoWorld();
+        ~SlopeDemoWorld();
+
         Physics::World& get_world() override;
     };
 }
