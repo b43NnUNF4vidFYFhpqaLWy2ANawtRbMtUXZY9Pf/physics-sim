@@ -91,8 +91,8 @@ namespace Engine
         // Can't pass a non-static member function as below, as
         // the 'this' parameter is an implicit parameter
         // body->set_collision_callback(render_collision);
-        body->set_collision_callback([this](Physics::CollisionPair collision, float dt)
-                                     {render_collision(collision, dt);}
+        body->set_collision_callback([this](Physics::CollisionPair collision, [[maybe_unused]] float dt)
+                                     {render_collision(collision);}
                                      );
     }
 
@@ -135,7 +135,7 @@ namespace Engine
         }
     }
 
-    void Window::render_collision(Physics::CollisionPair collision, float dt)
+    void Window::render_collision(Physics::CollisionPair collision)
     {
         SDL_SetRenderDrawColor(m_renderer, 0x00, 0xFF, 0x00, SDL_ALPHA_OPAQUE);
         SDL_RenderDrawLine(m_renderer, collision.contact.a.x, invert_y(collision.contact.a.y), collision.contact.b.x, invert_y(collision.contact.b.y));

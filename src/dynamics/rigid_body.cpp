@@ -7,12 +7,12 @@ namespace Physics
 {
     RigidBody::RigidBody(std::vector<Vector2> vertices, float mass, float restitution, float friction)
         : CollisionBody(vertices),
-          m_mass(mass),
-          m_restitution(restitution),
-          m_friction(friction),
-          m_invMass(1/mass),
           m_angularVelocity(0),
-          m_torque(0)
+          m_torque(0),
+          m_mass(mass),
+          m_invMass(1/mass),
+          m_restitution(restitution),
+          m_friction(friction)
     {
         calc_moment_of_inertia();
     }

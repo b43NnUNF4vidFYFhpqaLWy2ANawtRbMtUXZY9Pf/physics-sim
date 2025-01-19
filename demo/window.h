@@ -27,7 +27,7 @@ namespace Engine
         
         void render_world();
         void render_polygon(const Physics::Polygon* const polygon);
-        void render_collision(Physics::CollisionPair collision, float dt);
+        void render_collision(Physics::CollisionPair collision);
         float invert_y(float y);
     public:
         Window(int width, int height, Physics::World& world);

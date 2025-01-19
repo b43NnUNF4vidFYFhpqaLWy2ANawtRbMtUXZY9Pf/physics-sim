@@ -11,8 +11,8 @@ namespace Physics
     }
 
     void Bruteforce::update() {}
-    void Bruteforce::insert(CollisionBody* body) {};
-    void Bruteforce::remove(CollisionBody* body) {};
+    void Bruteforce::insert([[maybe_unused]] CollisionBody* body) {};
+    void Bruteforce::remove([[maybe_unused]] CollisionBody* body) {};
 
     std::vector<CollisionPair>& Bruteforce::get_collisions()
     {

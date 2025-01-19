@@ -122,7 +122,7 @@ namespace Physics
         std::size_t n = m_vertices.size();
 
         i_next = 1;
-        for (int i = 0; i < n; i++)
+        for (std::size_t i = 0; i < n; i++)
         {
             Vector2 v = m_vertices[i];
             Vector2 v1 = m_vertices[i_next];
