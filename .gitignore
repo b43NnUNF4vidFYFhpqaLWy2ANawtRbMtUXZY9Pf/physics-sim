@@ -399,3 +399,10 @@ FodyWeavers.xsd
 
 # build
 build/
+
+# Doxygen
+docs/html/
+docs/latex/
+docs/xml/
+docs/rtf/
+docs/man/

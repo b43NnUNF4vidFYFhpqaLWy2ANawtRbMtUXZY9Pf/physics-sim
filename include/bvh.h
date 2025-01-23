@@ -1,3 +1,14 @@
+/**
+ * @file bvh.h
+ * @author b43NnUNF4vidFYFhpqaLWy2ANawtRbMtUXZY9Pf
+ * @brief The AABBTree class implements a dynamic AABB tree
+ * @version 0.1.0
+ * @date 2025-01-20
+ * 
+ * @copyright Copyright (c) 2025
+ * 
+ */
+
 #pragma once
 
 #include "collision_detector.h"
@@ -6,6 +17,10 @@
 
 namespace Physics
 {
+    /**
+     * @brief The AABBTree class implements a dynamic AABB tree
+     * 
+     */
     class AABBTree : public CollisionDetector
     {
     private:
@@ -24,6 +39,11 @@ namespace Physics
         void clear_crossed_flags(std::shared_ptr<Node>& node);
         void compute_collisions(std::shared_ptr<Node>& a, std::shared_ptr<Node>& b);
     public:
+        /**
+         * @brief Construct a new AABBTree object
+         * 
+         * @param margin The margin for the enlarged AABB. When the AABB moves outside the enlarged AABB, the node is re-inserted.
+         */
         AABBTree(float margin);
         
         void set_objects(std::vector<CollisionBody*>* objects) override;

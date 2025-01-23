@@ -1,3 +1,14 @@
+/**
+ * @file contact_constraint.h
+ * @author b43NnUNF4vidFYFhpqaLWy2ANawtRbMtUXZY9Pf
+ * @brief The ContactConstraint class represents a contact constraint
+ * @version 0.1.0
+ * @date 2025-01-20
+ * 
+ * @copyright Copyright (c) 2025
+ * 
+ */
+
 #pragma once
 
 #include "constraint.h"
@@ -5,6 +16,10 @@
 
 namespace Physics
 {
+    /**
+     * @brief The contact constraint enforces the separation of two colliding rigid bodies
+     * 
+     */
     class ContactConstraint : public Constraint
     {
     private:
@@ -25,6 +40,19 @@ namespace Physics
         
         float m_total_lambda, m_total_lambda_t;
     public:
+        /**
+         * @brief Construct a new ContactConstraint object
+         * 
+         * @param A The first rigid body
+         * @param B The second rigid body
+         * @param contact The contact data
+         * @param beta The Baumgarte stabilization factor
+         * @param slop_p The penetration slop: Amount of penetration allowed before Baumgarte stabilization is applied
+         * @param slop_r The restitution slop: Amount of restitution allowed before Baumgarte stabilization is applied
+         * @param dt The time step
+         * 
+         * @see Constraint for more information on the Baumgarte stabilization factor
+         */
         ContactConstraint(RigidBody* A, RigidBody* B, Contact& contact, float beta, float slop_p, float slop_r, float dt);
         void solve() override;
     };
