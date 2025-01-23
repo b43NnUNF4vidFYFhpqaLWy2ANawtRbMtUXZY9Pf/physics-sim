@@ -2,6 +2,10 @@
 
 namespace Physics
 {
+    static bool update_simplex(Simplex2& supports, Vector2& direction);
+    static bool line_case(Simplex2& supports, Vector2& direction);
+    static bool triangle_case(Simplex2& supports, Vector2& direction);
+
     Simplex2 GJK(const Polygon* const a, const Polygon* const b)
     {
         CSOSupport support(a, b, {1, 0});
@@ -25,7 +29,7 @@ namespace Physics
         }
     }
 
-    bool update_simplex(Simplex2& supports, Vector2& direction)
+    static bool update_simplex(Simplex2& supports, Vector2& direction)
     {
         switch ( supports.size() ) {
             case 2: return line_case(supports, direction);
@@ -35,7 +39,7 @@ namespace Physics
         return false; // Error
     }
 
-    bool line_case(Simplex2& supports, Vector2& direction)
+    static bool line_case(Simplex2& supports, Vector2& direction)
     {
 
         CSOSupport A = supports[0];
@@ -58,7 +62,7 @@ namespace Physics
     }
 
 
-    bool triangle_case(Simplex2& supports, Vector2& direction)
+    static bool triangle_case(Simplex2& supports, Vector2& direction)
     {
         CSOSupport A = supports[0];
         CSOSupport B = supports[1];
