@@ -2,6 +2,8 @@
 
 Constraint-based rigid body physics engine (2D).
 
+https://github.com/user-attachments/assets/c0fa2477-c555-4f0d-9b9e-b1e99aa777ea
+
 ## Table of contents
 
 - [Physics simulation](#physics-simulation)
